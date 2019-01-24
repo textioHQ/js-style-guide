@@ -63,6 +63,7 @@ Other Style Guides
 ## Types
 
   <a name="types--primitives"></a><a name="1.1"></a>
+  - Try to clarify, or add diagram to explain further
   - [1.1](#types--primitives) **Primitives**: When you access a primitive type you work directly on its value.
 
     - `string`
@@ -104,6 +105,7 @@ Other Style Guides
 ## References
 
   <a name="references--prefer-const"></a><a name="2.1"></a>
+  TODO: Put caveat for using const on non-primitave objects
   - [2.1](#references--prefer-const) Use `const` for all of your references; avoid using `var`. eslint: [`prefer-const`](https://eslint.org/docs/rules/prefer-const.html), [`no-const-assign`](https://eslint.org/docs/rules/no-const-assign.html)
 
     > Why? This ensures that you can’t reassign your references, which can lead to bugs and difficult to comprehend code.
@@ -285,6 +287,7 @@ Other Style Guides
     ```
 
   <a name="objects--prototype-builtins"></a>
+  TODO: Check usage in code
   - [3.7](#objects--prototype-builtins) Do not call `Object.prototype` methods directly, such as `hasOwnProperty`, `propertyIsEnumerable`, and `isPrototypeOf`. eslint: [`no-prototype-builtins`](https://eslint.org/docs/rules/no-prototype-builtins)
 
     > Why? These methods may be shadowed by properties on the object in question - consider `{ hasOwnProperty: false }` - or, the object may be a null object (`Object.create(null)`).
@@ -376,7 +379,7 @@ Other Style Guides
     ```javascript
     const foo = document.querySelectorAll('.foo');
 
-    // good
+    // not as good
     const nodes = Array.from(foo);
 
     // best
@@ -392,18 +395,19 @@ Other Style Guides
     // bad
     const arr = Array.prototype.slice.call(arrLike);
 
-    // good
+    // not as good as Object.values, but doesn't do Maps or Sets
     const arr = Array.from(arrLike);
     ```
 
   <a name="arrays--mapping"></a>
+  TODO: reword summary, both okay
   - [4.6](#arrays--mapping) Use [`Array.from`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/from) instead of spread `...` for mapping over iterables, because it avoids creating an intermediate array.
 
     ```javascript
-    // bad
+    // okay
     const baz = [...foo].map(bar);
 
-    // good
+    // okay
     const baz = Array.from(foo, bar);
     ```
 
@@ -615,7 +619,7 @@ Other Style Guides
       return ['How are you, ', name, '?'].join();
     }
 
-    // bad
+    // bad : In contrast with an Object where you add spaces when destructuring
     function sayHi(name) {
       return `How are you, ${ name }?`;
     }
@@ -658,12 +662,12 @@ Other Style Guides
       // ...
     }
 
-    // bad
-    const foo = function () {
+    // okay
+    const foo = () => {
       // ...
     };
 
-    // good
+    // good?
     // lexical name distinguished from the variable-referenced invocation(s)
     const short = function longUniqueMoreDescriptiveLexicalFoo() {
       // ...
@@ -673,10 +677,10 @@ Other Style Guides
   <a name="functions--iife"></a><a name="7.2"></a>
   - [7.2](#functions--iife) Wrap immediately invoked function expressions in parentheses. eslint: [`wrap-iife`](https://eslint.org/docs/rules/wrap-iife.html)
 
-    > Why? An immediately invoked function expression is a single unit - wrapping both it, and its invocation parens, in parens, cleanly expresses this. Note that in a world with modules everywhere, you almost never need an IIFE.
+    > Why? An immediately invoked function expression is a single unit - wrapping both it, and its invocation parens, in parens, cleanly expresses this. **Note that in a world with modules everywhere, you almost never need an IIFE.**
 
     ```javascript
-    // immediately-invoked function expression (IIFE)
+    // immediately-invoked function expression (IIFE) 
     (function () {
       console.log('Welcome to the Internet. Please follow me.');
     }());
@@ -696,7 +700,7 @@ Other Style Guides
       }
     }
 
-    // good
+    // less bad
     let test;
     if (currentUser) {
       test = () => {
@@ -742,7 +746,7 @@ Other Style Guides
   - [7.7](#es6-default-parameters) Use default parameter syntax rather than mutating function arguments.
 
     ```javascript
-    // really bad
+    // really bad, NO!
     function handleThings(opts) {
       // No! We shouldn’t mutate function arguments.
       // Double bad: if opts is falsy it'll be set to an object which may
@@ -819,10 +823,10 @@ Other Style Guides
     // bad
     const f = function(){};
     const g = function (){};
-    const h = function() {};
+    const x = function () {};
 
     // good
-    const x = function () {};
+    const h = function() {};
     const y = function a() {};
     ```
 
