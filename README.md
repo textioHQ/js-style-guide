@@ -842,6 +842,7 @@ Other Style Guides
     }
 
     // good
+    TODO: cleaner example
     function f2(obj) {
       const key = Object.prototype.hasOwnProperty.call(obj, 'key') ? obj.key : 1;
     }
@@ -884,13 +885,13 @@ Other Style Guides
     // bad
     const x = [1, 2, 3, 4, 5];
     console.log.apply(console, x);
-
+    
+    // bad
+    new (Function.prototype.bind.apply(Date, [null, 2016, 8, 5]));
+    
     // good
     const x = [1, 2, 3, 4, 5];
     console.log(...x);
-
-    // bad
-    new (Function.prototype.bind.apply(Date, [null, 2016, 8, 5]));
 
     // good
     new Date(...[2016, 8, 5]);
@@ -979,24 +980,6 @@ Other Style Guides
     [1, 2, 3].map((number, index) => ({
       [index]: number,
     }));
-
-    // No implicit return with side effects
-    function foo(callback) {
-      const val = callback();
-      if (val === true) {
-        // Do something if callback returns true
-      }
-    }
-
-    let bool = false;
-
-    // bad
-    foo(() => bool = true);
-
-    // good
-    foo(() => {
-      bool = true;
-    });
     ```
 
   <a name="arrows--paren-wrap"></a><a name="8.3"></a>
@@ -1269,7 +1252,7 @@ Other Style Guides
     const AirbnbStyleGuide = require('./AirbnbStyleGuide');
     module.exports = AirbnbStyleGuide.es6;
 
-    // ok
+    // ok, depricated
     import AirbnbStyleGuide from './AirbnbStyleGuide';
     export default AirbnbStyleGuide.es6;
 
@@ -1284,7 +1267,7 @@ Other Style Guides
     > Why? This makes sure you have a single default export.
 
     ```javascript
-    // bad
+    // bad, necessary for typescript files
     import * as AirbnbStyleGuide from './AirbnbStyleGuide';
 
     // good
@@ -1329,6 +1312,7 @@ Other Style Guides
     ```
 
   <a name="modules--no-mutable-exports"></a>
+  TODO: Clearer description - don't export let
   - [10.5](#modules--no-mutable-exports) Do not export mutable bindings.
  eslint: [`import/no-mutable-exports`](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-mutable-exports.md)
     > Why? Mutation should be avoided in general, but in particular when exporting mutable bindings. While this technique may be needed for some special cases, in general, only constant references should be exported.
@@ -1376,7 +1360,7 @@ Other Style Guides
     ```
 
   <a name="modules--multiline-imports-over-newlines"></a>
-  - [10.8](#modules--multiline-imports-over-newlines) Multiline imports should be indented just like multiline array and object literals.
+  - [10.8](#modules--multiline-imports-over-newlines) Multiline imports should be indented just like multiline array and object literals. TODO: use intuition/readability note
 
     > Why? The curly braces follow the same indentation rules as every other curly brace block in the style guide, as do the trailing commas.
 
@@ -1441,7 +1425,7 @@ Other Style Guides
     const sum = numbers.reduce((total, num) => total + num, 0);
     sum === 15;
 
-    // bad
+    // okay
     const increasedByOne = [];
     for (let i = 0; i < numbers.length; i++) {
       increasedByOne.push(numbers[i] + 1);
@@ -1453,17 +1437,12 @@ Other Style Guides
       increasedByOne.push(num + 1);
     });
 
-    // best (keeping it functional)
+    // best (keeping it functional) not mutating
     const increasedByOne = numbers.map(num => num + 1);
     ```
 
-  <a name="generators--nope"></a><a name="11.2"></a>
-  - [11.2](#generators--nope) Don’t use generators for now.
-
-    > Why? They don’t transpile well to ES5.
-
   <a name="generators--spacing"></a>
-  - [11.3](#generators--spacing) If you must use generators, or if you disregard [our advice](#generators--nope), make sure their function signature is spaced properly. eslint: [`generator-star-spacing`](https://eslint.org/docs/rules/generator-star-spacing)
+  - [11.3](#generators--spacing) If you must use generators make sure their function signature is spaced properly. eslint: [`generator-star-spacing`](https://eslint.org/docs/rules/generator-star-spacing)
 
     > Why? `function` and `*` are part of the same conceptual keyword - `*` is not a modifier for `function`, `function*` is a unique construct, different from `function`.
 
@@ -1608,6 +1587,7 @@ Other Style Guides
     ```
 
   <a name="variables--const-let-group"></a><a name="13.3"></a>
+  TODO: be thoughtful about how to organize const/let
   - [13.3](#variables--const-let-group) Group all your `const`s and then group all your `let`s.
 
     > Why? This is helpful when later on you might need to assign a variable depending on one of the previous assigned variables.
@@ -1672,6 +1652,7 @@ Other Style Guides
     }
     ```
   <a name="variables--no-chain-assignment"></a><a name="13.5"></a>
+  TODO: maybe get better example
   - [13.5](#variables--no-chain-assignment) Don’t chain variable assignments. eslint: [`no-multi-assign`](https://eslint.org/docs/rules/no-multi-assign)
 
     > Why? Chaining variable assignments creates implicit global variables.
@@ -1806,6 +1787,7 @@ Other Style Guides
 ## Hoisting
 
   <a name="hoisting--about"></a><a name="14.1"></a>
+  TODO: This whole section is a learning moment, note the difference
   - [14.1](#hoisting--about) `var` declarations get hoisted to the top of their closest enclosing function scope, their assignment does not. `const` and `let` declarations are blessed with a new concept called [Temporal Dead Zones (TDZ)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let#Temporal_Dead_Zone). It’s important to know why [typeof is no longer safe](http://es-discourse.com/t/why-typeof-is-no-longer-safe/15).
 
     ```javascript
@@ -1842,6 +1824,7 @@ Other Style Guides
     ```
 
   <a name="hoisting--anon-expressions"></a><a name="14.2"></a>
+  TODO: Rename function to something other than anon
   - [14.2](#hoisting--anon-expressions) Anonymous function expressions hoist their variable name, but not the function assignment.
 
     ```javascript
@@ -1905,9 +1888,11 @@ Other Style Guides
 ## Comparison Operators & Equality
 
   <a name="comparison--eqeqeq"></a><a name="15.1"></a>
+  TODO: Add a 'why'
   - [15.1](#comparison--eqeqeq) Use `===` and `!==` over `==` and `!=`. eslint: [`eqeqeq`](https://eslint.org/docs/rules/eqeqeq.html)
 
   <a name="comparison--if"></a><a name="15.2"></a>
+  TODO: Learning moment
   - [15.2](#comparison--if) Conditional statements such as the `if` statement evaluate their expression using coercion with the `ToBoolean` abstract method and always follow these simple rules:
 
     - **Objects** evaluate to **true**
@@ -2011,6 +1996,7 @@ Other Style Guides
     ```
 
   <a name="comparison--nested-ternaries"></a><a name="15.6"></a>
+  TODO: Add less okay multiline example (opposing good if one line ex)
   - [15.6](#comparison--nested-ternaries) Ternaries should not be nested and generally be single line expressions. eslint: [`no-nested-ternary`](https://eslint.org/docs/rules/no-nested-ternary.html)
 
     ```javascript
@@ -2022,7 +2008,7 @@ Other Style Guides
     // split into 2 separated ternary expressions
     const maybeNull = value1 > value2 ? 'baz' : null;
 
-    // better
+    // good if one line
     const foo = maybe1 > maybe2
       ? 'bar'
       : maybeNull;
