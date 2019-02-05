@@ -2077,7 +2077,7 @@ Other Style Guides
     if (test)
       return false;
 
-    // good
+    // okay but not allowed in linting rules
     if (test) return false;
 
     // good
@@ -2095,6 +2095,7 @@ Other Style Guides
     ```
 
   <a name="blocks--cuddled-elses"></a><a name="16.2"></a>
+  TODO: good & bad swapped, modify description 'stroustrup braces'
   - [16.2](#blocks--cuddled-elses) If you’re using multi-line blocks with `if` and `else`, put `else` on the same line as your `if` block’s closing brace. eslint: [`brace-style`](https://eslint.org/docs/rules/brace-style.html)
 
     ```javascript
@@ -2102,16 +2103,16 @@ Other Style Guides
     if (test) {
       thing1();
       thing2();
-    }
-    else {
+    } else {
       thing3();
     }
-
+    
     // good
     if (test) {
       thing1();
       thing2();
-    } else {
+    }
+    else {
       thing3();
     }
     ```
@@ -2167,6 +2168,7 @@ Other Style Guides
       if (y) {
         return y;
       }
+      return z; // must have a return
     }
 
     // good
@@ -2178,6 +2180,7 @@ Other Style Guides
       } else {
         return z;
       }
+      return zztop;
     }
     ```
 
@@ -2197,8 +2200,10 @@ Other Style Guides
     }
 
     // bad
-    if (foo === 123 &&
-      bar === 'abc') {
+    if (
+      foo === 123 &&
+      bar === 'abc'
+    ) {
       thing1();
     }
 
@@ -2243,7 +2248,7 @@ Other Style Guides
   - [17.2](#control-statements--value-selection) Don't use selection operators in place of control statements.
 
     ```javascript
-    // bad
+    // bad in javascript, but commonly used in jsx
     !isRunning && startRunning();
 
     // good
@@ -2256,75 +2261,7 @@ Other Style Guides
 
 ## Comments
 
-  <a name="comments--multiline"></a><a name="17.1"></a>
-  - [18.1](#comments--multiline) Use `/** ... */` for multi-line comments.
-
-    ```javascript
-    // bad
-    // make() returns a new element
-    // based on the passed in tag name
-    //
-    // @param {String} tag
-    // @return {Element} element
-    function make(tag) {
-
-      // ...
-
-      return element;
-    }
-
-    // good
-    /**
-     * make() returns a new element
-     * based on the passed-in tag name
-     */
-    function make(tag) {
-
-      // ...
-
-      return element;
-    }
-    ```
-
-  <a name="comments--singleline"></a><a name="17.2"></a>
-  - [18.2](#comments--singleline) Use `//` for single line comments. Place single line comments on a newline above the subject of the comment. Put an empty line before the comment unless it’s on the first line of a block.
-
-    ```javascript
-    // bad
-    const active = true;  // is current tab
-
-    // good
-    // is current tab
-    const active = true;
-
-    // bad
-    function getType() {
-      console.log('fetching type...');
-      // set the default type to 'no type'
-      const type = this.type || 'no type';
-
-      return type;
-    }
-
-    // good
-    function getType() {
-      console.log('fetching type...');
-
-      // set the default type to 'no type'
-      const type = this.type || 'no type';
-
-      return type;
-    }
-
-    // also good
-    function getType() {
-      // set the default type to 'no type'
-      const type = this.type || 'no type';
-
-      return type;
-    }
-    ```
-
+TODO: Adjust number to 18.1
   <a name="comments--spaces"></a>
   - [18.3](#comments--spaces) Start all comments with a space to make it easier to read. eslint: [`spaced-comment`](https://eslint.org/docs/rules/spaced-comment)
 
@@ -2364,6 +2301,7 @@ Other Style Guides
 
   <a name="comments--actionitems"></a><a name="17.3"></a>
   - [18.4](#comments--actionitems) Prefixing your comments with `FIXME` or `TODO` helps other developers quickly understand if you’re pointing out a problem that needs to be revisited, or if you’re suggesting a solution to the problem that needs to be implemented. These are different than regular comments because they are actionable. The actions are `FIXME: -- need to figure this out` or `TODO: -- need to implement`.
+  TODO: modify - helpful for developing but cannot submit PR, instead of TODOing in the code make a Jira ticket
 
   <a name="comments--fixme"></a><a name="17.4"></a>
   - [18.5](#comments--fixme) Use `// FIXME:` to annotate problems.
@@ -2398,17 +2336,18 @@ Other Style Guides
 ## Whitespace
 
   <a name="whitespace--spaces"></a><a name="18.1"></a>
-  - [19.1](#whitespace--spaces) Use soft tabs (space character) set to 2 spaces. eslint: [`indent`](https://eslint.org/docs/rules/indent.html)
+  - [19.1](#whitespace--spaces) Use soft tabs (space character) set to 2 or 4 spaces. eslint: [`indent`](https://eslint.org/docs/rules/indent.html)
+  TODO: 4 in frontend, 2 on PDF maker, etc go with what is existing
 
     ```javascript
-    // bad
-    function foo() {
-    ∙∙∙∙let name;
-    }
-
-    // bad
+    // very bad
     function bar() {
     ∙let name;
+    }
+    
+    // good
+    function foo() {
+    ∙∙∙∙let name;
     }
 
     // good
@@ -2508,6 +2447,7 @@ Other Style Guides
   <a name="whitespace--chains"></a><a name="18.6"></a>
   - [19.6](#whitespace--chains) Use indentation when making long method chains (more than 2 method chains). Use a leading dot, which
     emphasizes that the line is a method call, not a new statement. eslint: [`newline-per-chained-call`](https://eslint.org/docs/rules/newline-per-chained-call) [`no-whitespace-before-property`](https://eslint.org/docs/rules/no-whitespace-before-property)
+    TODO: find out if enforced, and if not bring it up to App eng to change rule
 
     ```javascript
     // bad
@@ -2699,6 +2639,7 @@ Other Style Guides
 
   <a name="whitespace--max-len"></a><a name="18.12"></a>
   - [19.12](#whitespace--max-len) Avoid having lines of code that are longer than 100 characters (including whitespace). Note: per [above](#strings--line-length), long strings are exempt from this rule, and should not be broken up. eslint: [`max-len`](https://eslint.org/docs/rules/max-len.html)
+  TODO: Check how many cases and maybe change to follow 100 max rule (currently 150 max)
 
     > Why? This ensures readability and maintainability.
 
@@ -2776,7 +2717,8 @@ Other Style Guides
     ```javascript
     // bad
     func ();
-
+    
+    // bad
     func
     ();
 
@@ -2798,6 +2740,7 @@ Other Style Guides
 
   <a name="whitespace--no-trailing-spaces"></a>
   - [19.18](#whitespace--no-trailing-spaces) Avoid trailing spaces at the end of lines. eslint: [`no-trailing-spaces`](https://eslint.org/docs/rules/no-trailing-spaces)
+  TODO: add vs code extension name
 
   <a name="whitespace--no-multiple-empty-lines"></a>
   - [19.19](#whitespace--no-multiple-empty-lines) Avoid multiple empty lines and only allow one newline at the end of files. eslint: [`no-multiple-empty-lines`](https://eslint.org/docs/rules/no-multiple-empty-lines)
@@ -3009,6 +2952,7 @@ Other Style Guides
 
   <a name="coercion--explicit"></a><a name="21.1"></a>
   - [22.1](#coercion--explicit) Perform type coercion at the beginning of the statement.
+  TODO: What does this mean? Otherwise delete
 
   <a name="coercion--strings"></a><a name="21.2"></a>
   - [22.2](#coercion--strings)  Strings: eslint: [`no-new-wrappers`](https://eslint.org/docs/rules/no-new-wrappers)
@@ -3030,7 +2974,8 @@ Other Style Guides
     ```
 
   <a name="coercion--numbers"></a><a name="21.3"></a>
-  - [22.3](#coercion--numbers) Numbers: Use `Number` for type casting and `parseInt` always with a radix for parsing strings. eslint: [`radix`](https://eslint.org/docs/rules/radix) [`no-new-wrappers`](https://eslint.org/docs/rules/no-new-wrappers)
+  - [22.3](#coercion--numbers) Numbers: Use `Number` for type casting and `parseInt` always with a radix for parsing strings. eslint: [`no-new-wrappers`](https://eslint.org/docs/rules/no-new-wrappers)
+  TODO: Maybe add more info on why we don't need radix anymore (Eslint has updated info)
 
     ```javascript
     const inputValue = '4';
@@ -3043,15 +2988,15 @@ Other Style Guides
 
     // bad
     const val = inputValue >> 0;
+    
+    // bad, radix no longer needed
+    const val = parseInt(inputValue, 10);
 
-    // bad
+    // good
     const val = parseInt(inputValue);
 
     // good
     const val = Number(inputValue);
-
-    // good
-    const val = parseInt(inputValue, 10);
     ```
 
   <a name="coercion--comment-deviations"></a><a name="21.4"></a>
@@ -3098,6 +3043,7 @@ Other Style Guides
 
   <a name="naming--descriptive"></a><a name="22.1"></a>
   - [23.1](#naming--descriptive) Avoid single letter names. Be descriptive with your naming. eslint: [`id-length`](https://eslint.org/docs/rules/id-length)
+  TODO: Not enforced in frontend
 
     ```javascript
     // bad
@@ -3113,6 +3059,7 @@ Other Style Guides
 
   <a name="naming--camelCase"></a><a name="22.2"></a>
   - [23.2](#naming--camelCase) Use camelCase when naming objects, functions, and instances. eslint: [`camelcase`](https://eslint.org/docs/rules/camelcase.html)
+  TODO: mention lint rule off due to react 16 conversion
 
     ```javascript
     // bad
@@ -3127,6 +3074,7 @@ Other Style Guides
 
   <a name="naming--PascalCase"></a><a name="22.3"></a>
   - [23.3](#naming--PascalCase) Use PascalCase only when naming constructors or classes. eslint: [`new-cap`](https://eslint.org/docs/rules/new-cap.html)
+  TODO: react functional components / emotion must be pascal case
 
     ```javascript
     // bad
@@ -3152,6 +3100,7 @@ Other Style Guides
 
   <a name="naming--leading-underscore"></a><a name="22.4"></a>
   - [23.4](#naming--leading-underscore) Do not use trailing or leading underscores. eslint: [`no-underscore-dangle`](https://eslint.org/docs/rules/no-underscore-dangle.html)
+  TODO: mention it is used in old code, and for some tools (redux devtools)
 
     > Why? JavaScript does not have the concept of privacy in terms of properties or methods. Although a leading underscore is a common convention to mean “private”, in fact, these properties are fully public, and as such, are part of your public API contract. This convention might lead developers to wrongly think that a change won’t count as breaking, or that tests aren’t needed. tl;dr: if you want something to be “private”, it must not be observably present.
 
@@ -3164,6 +3113,7 @@ Other Style Guides
     // good
     this.firstName = 'Panda';
 
+    TODO: Y this?
     // good, in environments where WeakMaps are available
     // see https://kangax.github.io/compat-table/es6/#test-WeakMap
     const firstNames = new WeakMap();
@@ -3200,6 +3150,7 @@ Other Style Guides
 
   <a name="naming--filename-matches-export"></a><a name="22.6"></a>
   - [23.6](#naming--filename-matches-export) A base filename should exactly match the name of its default export.
+  TODO: Note we don't do this currently, figure out what we want to do for 23.6, 23.7 23.8
 
     ```javascript
     // file 1 contents
@@ -3259,6 +3210,7 @@ Other Style Guides
 
   <a name="naming--Acronyms-and-Initialisms"></a>
   - [23.9](#naming--Acronyms-and-Initialisms) Acronyms and initialisms should always be all uppercased, or all lowercased.
+  TODO: If first letter is uppercase, all uppercase. Lowercase, then lowercase. 
 
     > Why? Names are for readability, not to appease a computer algorithm.
 
@@ -3284,10 +3236,10 @@ Other Style Guides
       // ...
     ];
 
-    // best
+    // best, don't even use an acronyms
     import TextMessageContainer from './containers/TextMessageContainer';
 
-    // best
+    // best, don't even use an acronyms
     const requests = [
       // ...
     ];
