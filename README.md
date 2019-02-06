@@ -63,8 +63,8 @@ Other Style Guides
 ## Types
 
   <a name="types--primitives"></a><a name="1.1"></a>
-  - Try to clarify, or add diagram to explain further
   - [1.1](#types--primitives) **Primitives**: When you access a primitive type you work directly on its value.
+  TODO: Try to clarify, or add diagram to explain further
 
     - `string`
     - `number`
@@ -287,8 +287,8 @@ Other Style Guides
     ```
 
   <a name="objects--prototype-builtins"></a>
-  TODO: Check usage in code
   - [3.7](#objects--prototype-builtins) Do not call `Object.prototype` methods directly, such as `hasOwnProperty`, `propertyIsEnumerable`, and `isPrototypeOf`. eslint: [`no-prototype-builtins`](https://eslint.org/docs/rules/no-prototype-builtins)
+  TODO: Check usage in code. UPDATE: We currently use the bad style
 
     > Why? These methods may be shadowed by properties on the object in question - consider `{ hasOwnProperty: false }` - or, the object may be a null object (`Object.create(null)`).
 
@@ -400,8 +400,7 @@ Other Style Guides
     ```
 
   <a name="arrays--mapping"></a>
-  TODO: reword summary, both okay
-  - [4.6](#arrays--mapping) Use [`Array.from`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/from) instead of spread `...` for mapping over iterables, because it avoids creating an intermediate array.
+  - [4.6](#arrays--mapping) Using [`Array.from`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/from) or spread `...` for mapping over iterables. Array.from avoids creating an intermediate array.
 
     ```javascript
     // okay
@@ -570,6 +569,7 @@ Other Style Guides
 
   <a name="strings--quotes"></a><a name="6.1"></a>
   - [6.1](#strings--quotes) Use single quotes `''` for strings. eslint: [`quotes`](https://eslint.org/docs/rules/quotes.html)
+  TODO: Have a discussion with App Eng. Modify if not changing to this.
 
     ```javascript
     // bad
@@ -667,7 +667,7 @@ Other Style Guides
       // ...
     };
 
-    // good?
+    // good TODO: Revisit, do we want to do this & add 'avoid using IIFEs'
     // lexical name distinguished from the variable-referenced invocation(s)
     const short = function longUniqueMoreDescriptiveLexicalFoo() {
       // ...
@@ -688,6 +688,24 @@ Other Style Guides
 
   <a name="functions--in-blocks"></a><a name="7.3"></a>
   - [7.3](#functions--in-blocks) Never declare a function in a non-function block (`if`, `while`, etc). Assign the function to a variable instead. Browsers will allow you to do it, but they all interpret it differently, which is bad news bears. eslint: [`no-loop-func`](https://eslint.org/docs/rules/no-loop-func.html)
+  
+      > Why? Writing functions within loops tends to result in errors due to the way the function creates a closure around the loop. In the bad case below, you would expect each function created within the loop to return a different number. In reality, each function returns 10, because that was the last value of i in the scope.
+  
+    ```javascript
+    // bad
+    for (var i = 0; i < 10; i++) {
+        funcs[i] = function() {
+            return i;
+        };
+    }
+    
+    // good: let or const mitigate this problem
+    for (let i = 0; i < 10; i++) {
+      funcs[i] = function() {
+          return i;
+      };
+    }
+    ```
 
   <a name="functions--note-on-blocks"></a><a name="7.4"></a>
   - [7.4](#functions--note-on-blocks) **Note:** ECMA-262 defines a `block` as a list of statements. A function declaration is not a statement.
@@ -842,9 +860,8 @@ Other Style Guides
     }
 
     // good
-    TODO: cleaner example
     function f2(obj) {
-      const key = Object.prototype.hasOwnProperty.call(obj, 'key') ? obj.key : 1;
+      const new = obj;
     }
     ```
 
@@ -866,11 +883,6 @@ Other Style Guides
     }
 
     // good
-    function f3(a) {
-      const b = a || 1;
-      // ...
-    }
-
     function f4(a = 1) {
       // ...
     }
@@ -928,6 +940,9 @@ Other Style Guides
       bar,
       baz,
     );
+    
+    // good: If the arguments fit on a single line no need for new lines
+    console.log(foo, bar, baz);
     ```
 
 **[⬆ back to top](#table-of-contents)**
@@ -1213,6 +1228,11 @@ Other Style Guides
         this.name = 'Rey';
       }
     }
+    
+    // good
+    class Rey extends Jedi {
+      state = { name: 'Rey' }
+    }
     ```
 
   <a name="classes--no-duplicate-members"></a>
@@ -1252,7 +1272,7 @@ Other Style Guides
     const AirbnbStyleGuide = require('./AirbnbStyleGuide');
     module.exports = AirbnbStyleGuide.es6;
 
-    // ok, depricated
+    // ok: Deprecated
     import AirbnbStyleGuide from './AirbnbStyleGuide';
     export default AirbnbStyleGuide.es6;
 
@@ -1267,7 +1287,7 @@ Other Style Guides
     > Why? This makes sure you have a single default export.
 
     ```javascript
-    // bad, necessary for typescript files
+    // bad: Necessary for typescript files
     import * as AirbnbStyleGuide from './AirbnbStyleGuide';
 
     // good
@@ -1312,8 +1332,7 @@ Other Style Guides
     ```
 
   <a name="modules--no-mutable-exports"></a>
-  TODO: Clearer description - don't export let
-  - [10.5](#modules--no-mutable-exports) Do not export mutable bindings.
+  - [10.5](#modules--no-mutable-exports) Do not export mutable bindings, forbids the use of exports with var or let.
  eslint: [`import/no-mutable-exports`](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-mutable-exports.md)
     > Why? Mutation should be avoided in general, but in particular when exporting mutable bindings. While this technique may be needed for some special cases, in general, only constant references should be exported.
 
@@ -1330,6 +1349,7 @@ Other Style Guides
   <a name="modules--prefer-default-export"></a>
   - [10.6](#modules--prefer-default-export) In modules with a single export, prefer default export over named export.
  eslint: [`import/prefer-default-export`](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/prefer-default-export.md)
+ TODO: Follow up on discussion from last July with App Eng.
     > Why? To encourage more files that only ever export one thing, which is better for readability and maintainability.
 
     ```javascript
@@ -1360,12 +1380,12 @@ Other Style Guides
     ```
 
   <a name="modules--multiline-imports-over-newlines"></a>
-  - [10.8](#modules--multiline-imports-over-newlines) Multiline imports should be indented just like multiline array and object literals. TODO: use intuition/readability note
+  - [10.8](#modules--multiline-imports-over-newlines) Multiline imports should be indented just like multiline array and object literals if readability is a concern. If a single line import is readable, feel free to leave as a single line.
 
     > Why? The curly braces follow the same indentation rules as every other curly brace block in the style guide, as do the trailing commas.
 
     ```javascript
-    // bad
+    // okay
     import {longNameA, longNameB, longNameC, longNameD, longNameE} from 'path';
 
     // good
@@ -1421,7 +1441,7 @@ Other Style Guides
     });
     sum === 15;
 
-    // best (use the functional force)
+    // best: Use the functional force
     const sum = numbers.reduce((total, num) => total + num, 0);
     sum === 15;
 
@@ -1437,12 +1457,12 @@ Other Style Guides
       increasedByOne.push(num + 1);
     });
 
-    // best (keeping it functional) not mutating
+    // best: Keeping it functional, not mutating
     const increasedByOne = numbers.map(num => num + 1);
     ```
 
   <a name="generators--spacing"></a>
-  - [11.3](#generators--spacing) If you must use generators make sure their function signature is spaced properly. eslint: [`generator-star-spacing`](https://eslint.org/docs/rules/generator-star-spacing)
+  - [11.2](#generators--spacing) If you must use generators make sure their function signature is spaced properly. eslint: [`generator-star-spacing`](https://eslint.org/docs/rules/generator-star-spacing)
 
     > Why? `function` and `*` are part of the same conceptual keyword - `*` is not a modifier for `function`, `function*` is a unique construct, different from `function`.
 
