@@ -3267,7 +3267,7 @@ TODO: Adjust number to 18.1
 
   <a name="naming--uppercase"></a>
   - [23.10](#naming--uppercase) You may optionally uppercase a constant only if it (1) is exported, (2) is a `const` (it can not be reassigned), and (3) the programmer can trust it (and its nested properties) to never change.
-
+TODO: Simplify rule for correct/current usage
     > Why? This is an additional tool to assist in situations where the programmer would be unsure if a variable might ever change. UPPERCASE_VARIABLES are letting the programmer know that they can trust the variable (and its properties) not to change.
     - What about all `const` variables? - This is unnecessary, so uppercasing should not be used for constants within a file. It should be used for exported constants however.
     - What about exported objects? - Uppercase at the top level of export  (e.g. `EXPORTED_OBJECT.key`) and maintain that all nested properties do not change.
@@ -3309,6 +3309,7 @@ TODO: Adjust number to 18.1
 
   <a name="accessors--not-required"></a><a name="23.1"></a>
   - [24.1](#accessors--not-required) Accessor functions for properties are not required.
+TODO: Add example or combine with below if same example
 
   <a name="accessors--no-getters-setters"></a><a name="23.2"></a>
   - [24.2](#accessors--no-getters-setters) Do not use JavaScript getters/setters as they cause unexpected side effects and are harder to test, maintain, and reason about. Instead, if you do make accessor functions, use `getVal()` and `setVal('hello')`.
@@ -3339,6 +3340,7 @@ TODO: Adjust number to 18.1
 
   <a name="accessors--boolean-prefix"></a><a name="23.3"></a>
   - [24.3](#accessors--boolean-prefix) If the property/method is a `boolean`, use `isVal()` or `hasVal()`.
+TODO: Better exmaple
 
     ```javascript
     // bad
@@ -3354,6 +3356,7 @@ TODO: Adjust number to 18.1
 
   <a name="accessors--consistent"></a><a name="23.4"></a>
   - [24.4](#accessors--consistent) It’s okay to create `get()` and `set()` functions, but be consistent.
+TODO: Change description, we don't use these but if you need to 'here's how'
 
     ```javascript
     class Jedi {
@@ -3378,6 +3381,7 @@ TODO: Adjust number to 18.1
 
   <a name="events--hash"></a><a name="24.1"></a>
   - [25.1](#events--hash) When attaching data payloads to events (whether DOM events or something more proprietary like Backbone events), pass an object literal (also known as a "hash")  instead of a raw value. This allows a subsequent contributor to add more data to the event payload without finding and updating every handler for the event. For example, instead of:
+  TODO: Update to not use jQuery examples
 
     ```javascript
     // bad
@@ -3407,6 +3411,7 @@ TODO: Adjust number to 18.1
 
 ## jQuery
 
+  TODO: Note on avoiding JQuery
   <a name="jquery--dollar-prefix"></a><a name="25.1"></a>
   - [26.1](#jquery--dollar-prefix) Prefix jQuery object variables with a `$`.
 
