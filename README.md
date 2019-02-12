@@ -3553,4 +3553,4 @@ TODO: Change description, we don't use these but if you need to 'here's how'
 
 We encourage you to fork this guide and change the rules to fit your team’s style guide. Below, you may list some amendments to the style guide. This allows you to periodically update your style guide without having to deal with merge conflicts.
 
-# };
+**[⬆ back to top](#table-of-contents)**
