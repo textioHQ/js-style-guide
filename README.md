@@ -1,22 +1,11 @@
-# Airbnb JavaScript Style Guide() {
+# Textio Web Apps JavaScript Style Guide
 
-*A mostly reasonable approach to JavaScript*
-
-> **Note**: this guide assumes you are using [Babel](https://babeljs.io), and requires that you use [babel-preset-airbnb](https://npmjs.com/babel-preset-airbnb) or the equivalent. It also assumes you are installing shims/polyfills in your app, with [airbnb-browser-shims](https://npmjs.com/airbnb-browser-shims) or the equivalent.
-
-[![Downloads](https://img.shields.io/npm/dm/eslint-config-airbnb.svg)](https://www.npmjs.com/package/eslint-config-airbnb)
-[![Downloads](https://img.shields.io/npm/dm/eslint-config-airbnb-base.svg)](https://www.npmjs.com/package/eslint-config-airbnb-base)
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/airbnb/javascript?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
-This guide is available in other languages too. See [Translation](#translation)
+*A mostly reasonable approach to JavaScript, Based on AirBnb Style guide*
 
 Other Style Guides
 
-  - [ES5 (Deprecated)](https://github.com/airbnb/javascript/tree/es5-deprecated/es5)
   - [React](react/)
   - [CSS-in-JavaScript](css-in-javascript/)
-  - [CSS & Sass](https://github.com/airbnb/css)
-  - [Ruby](https://github.com/airbnb/ruby)
 
 ## Table of Contents
 
@@ -33,7 +22,7 @@ Other Style Guides
   1. [Iterators and Generators](#iterators-and-generators)
   1. [Properties](#properties)
   1. [Variables](#variables)
-  1. [Hoisting](#hoisting)
+  1. [Learning Hoisting](#hoisting)
   1. [Comparison Operators & Equality](#comparison-operators--equality)
   1. [Blocks](#blocks)
   1. [Control Statements](#control-statements)
@@ -46,19 +35,8 @@ Other Style Guides
   1. [Accessors](#accessors)
   1. [Events](#events)
   1. [jQuery](#jquery)
-  1. [ECMAScript 5 Compatibility](#ecmascript-5-compatibility)
   1. [ECMAScript 6+ (ES 2015+) Styles](#ecmascript-6-es-2015-styles)
   1. [Standard Library](#standard-library)
-  1. [Testing](#testing)
-  1. [Performance](#performance)
-  1. [Resources](#resources)
-  1. [In the Wild](#in-the-wild)
-  1. [Translation](#translation)
-  1. [The JavaScript Style Guide Guide](#the-javascript-style-guide-guide)
-  1. [Chat With Us About JavaScript](#chat-with-us-about-javascript)
-  1. [Contributors](#contributors)
-  1. [License](#license)
-  1. [Amendments](#amendments)
 
 ## Types
 
@@ -105,8 +83,8 @@ Other Style Guides
 ## References
 
   <a name="references--prefer-const"></a><a name="2.1"></a>
-  TODO: Put caveat for using const on non-primitave objects
   - [2.1](#references--prefer-const) Use `const` for all of your references; avoid using `var`. eslint: [`prefer-const`](https://eslint.org/docs/rules/prefer-const.html), [`no-const-assign`](https://eslint.org/docs/rules/no-const-assign.html)
+  Note: When using `const` on non-primative objects you can't change the type but you can change the properties.
 
     > Why? This ensures that you can’t reassign your references, which can lead to bugs and difficult to comprehend code.
 
@@ -1607,8 +1585,7 @@ Other Style Guides
     ```
 
   <a name="variables--const-let-group"></a><a name="13.3"></a>
-  TODO: be thoughtful about how to organize const/let
-  - [13.3](#variables--const-let-group) Group all your `const`s and then group all your `let`s.
+  - [13.3](#variables--const-let-group) Group all your `const`s and then group all your `let`s. Be thoughtful about how to organize your `const`s and `let`s, if it makes sense & is more readable to organize them closer to the function using them do so. 
 
     > Why? This is helpful when later on you might need to assign a variable depending on one of the previous assigned variables.
 
@@ -1672,7 +1649,6 @@ Other Style Guides
     }
     ```
   <a name="variables--no-chain-assignment"></a><a name="13.5"></a>
-  TODO: maybe get better example
   - [13.5](#variables--no-chain-assignment) Don’t chain variable assignments. eslint: [`no-multi-assign`](https://eslint.org/docs/rules/no-multi-assign)
 
     > Why? Chaining variable assignments creates implicit global variables.
@@ -1690,19 +1666,18 @@ Other Style Guides
     console.log(a); // throws ReferenceError
     console.log(b); // 1
     console.log(c); // 1
+    
+    // bad
+    let a = b = c = 5;
+    
+    // okay
+    let a = c;
+    let b = c;
 
     // good
-    (function example() {
-      let a = 1;
-      let b = a;
-      let c = a;
-    }());
-
-    console.log(a); // throws ReferenceError
-    console.log(b); // throws ReferenceError
-    console.log(c); // throws ReferenceError
-
-    // the same applies for `const`
+    let a = 5;
+    let b = 5;
+    let c = 5;
     ```
 
   <a name="variables--unary-increment-decrement"></a><a name="13.6"></a>
@@ -1804,10 +1779,10 @@ Other Style Guides
 
 **[⬆ back to top](#table-of-contents)**
 
-## Hoisting
+## Learning Hoisting
 
   <a name="hoisting--about"></a><a name="14.1"></a>
-  TODO: This whole section is a learning moment, note the difference
+  **These sections do not imply styling preference but are more of a learning guide for how hoisting works.**
   - [14.1](#hoisting--about) `var` declarations get hoisted to the top of their closest enclosing function scope, their assignment does not. `const` and `let` declarations are blessed with a new concept called [Temporal Dead Zones (TDZ)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let#Temporal_Dead_Zone). It’s important to know why [typeof is no longer safe](http://es-discourse.com/t/why-typeof-is-no-longer-safe/15).
 
     ```javascript
@@ -3312,6 +3287,7 @@ TODO: Simplify rule for correct/current usage
 TODO: Add example or combine with below if same example
 
   <a name="accessors--no-getters-setters"></a><a name="23.2"></a>
+  TODO: Clarify why getters & setters are bad & expanded on the unexpected side effects
   - [24.2](#accessors--no-getters-setters) Do not use JavaScript getters/setters as they cause unexpected side effects and are harder to test, maintain, and reason about. Instead, if you do make accessor functions, use `getVal()` and `setVal('hello')`.
 
     ```javascript
@@ -3548,9 +3524,3 @@ TODO: Change description, we don't use these but if you need to 'here's how'
 
 **[⬆ back to top](#table-of-contents)**
 
-
-## Amendments
-
-We encourage you to fork this guide and change the rules to fit your team’s style guide. Below, you may list some amendments to the style guide. This allows you to periodically update your style guide without having to deal with merge conflicts.
-
-**[⬆ back to top](#table-of-contents)**
