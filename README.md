@@ -1884,7 +1884,6 @@ Other Style Guides
 ## Comparison Operators & Equality
 
   <a name="comparison--eqeqeq"></a><a name="15.1"></a>
-  TODO: Add a 'why'
   - [15.1](#comparison--eqeqeq) Use `===` and `!==` over `==` and `!=`. The reason is that `==` and `!=` do type coercion which follows a rather obscure [Abstract Equality Comparision Algorithm](https://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3). eslint: [`eqeqeq`](https://eslint.org/docs/rules/eqeqeq.html)
   
     ```javascript
@@ -2003,7 +2002,6 @@ Other Style Guides
     ```
 
   <a name="comparison--nested-ternaries"></a><a name="15.6"></a>
-  TODO: Add less okay multiline example (opposing good if one line ex)
   - [15.6](#comparison--nested-ternaries) Ternaries should not be nested and generally be single line expressions. eslint: [`no-nested-ternary`](https://eslint.org/docs/rules/no-nested-ternary.html)
 
     ```javascript
@@ -2014,8 +2012,8 @@ Other Style Guides
 
     // split into 2 separated ternary expressions
     const maybeNull = value1 > value2 ? 'baz' : null;
-
-    // good if one line
+    
+    // okay
     const foo = maybe1 > maybe2
       ? 'bar'
       : maybeNull;
@@ -2268,9 +2266,8 @@ Other Style Guides
 
 ## Comments
 
-TODO: Adjust number to 18.1
   <a name="comments--spaces"></a>
-  - [18.3](#comments--spaces) Start all comments with a space to make it easier to read. eslint: [`spaced-comment`](https://eslint.org/docs/rules/spaced-comment)
+  - [18.1](#comments--spaces) Start all comments with a space to make it easier to read. eslint: [`spaced-comment`](https://eslint.org/docs/rules/spaced-comment)
 
     ```javascript
     // bad
@@ -2307,11 +2304,10 @@ TODO: Adjust number to 18.1
     ```
 
   <a name="comments--actionitems"></a><a name="17.3"></a>
-  - [18.4](#comments--actionitems) Prefixing your comments with `FIXME` or `TODO` helps other developers quickly understand if you’re pointing out a problem that needs to be revisited, or if you’re suggesting a solution to the problem that needs to be implemented. These are different than regular comments because they are actionable. The actions are `FIXME: -- need to figure this out` or `TODO: -- need to implement`.
-  TODO: modify - helpful for developing but cannot submit PR, instead of TODOing in the code make a Jira ticket
+  - [18.2](#comments--actionitems) Prefixing code while you developing can be helpful if you’re pointing out a problem that needs to be revisited. The actions are `FIXME: -- need to figure this out` or `TODO: -- need to implement`. You cannot submit a PR with `TODO`, if something needs further actions taken make a new **Jira ticket**.
 
   <a name="comments--fixme"></a><a name="17.4"></a>
-  - [18.5](#comments--fixme) Use `// FIXME:` to annotate problems.
+  - [18.3](#comments--fixme) Use `// FIXME:` to annotate problems.
 
     ```javascript
     class Calculator extends Abacus {
@@ -2325,7 +2321,7 @@ TODO: Adjust number to 18.1
     ```
 
   <a name="comments--todo"></a><a name="17.5"></a>
-  - [18.6](#comments--todo) Use `// TODO:` to annotate solutions to problems.
+  - [18.4](#comments--todo) Use `// TODO:` to annotate solutions to problems.
 
     ```javascript
     class Calculator extends Abacus {
@@ -2343,8 +2339,7 @@ TODO: Adjust number to 18.1
 ## Whitespace
 
   <a name="whitespace--spaces"></a><a name="18.1"></a>
-  - [19.1](#whitespace--spaces) Use soft tabs (space character) set to 2 or 4 spaces. eslint: [`indent`](https://eslint.org/docs/rules/indent.html)
-  TODO: 4 in frontend, 2 on PDF maker, etc go with what is existing
+  - [19.1](#whitespace--spaces) Use soft tabs (space character) set to 2 or 4 spaces. eslint: [`indent`](https://eslint.org/docs/rules/indent.html). Depending on the codebase you are working in, it may be set to 2 or 4, go with what is existing.
 
     ```javascript
     // very bad
@@ -2746,8 +2741,7 @@ TODO: Adjust number to 18.1
     ```
 
   <a name="whitespace--no-trailing-spaces"></a>
-  - [19.18](#whitespace--no-trailing-spaces) Avoid trailing spaces at the end of lines. eslint: [`no-trailing-spaces`](https://eslint.org/docs/rules/no-trailing-spaces)
-  TODO: add vs code extension name
+  - [19.18](#whitespace--no-trailing-spaces) Avoid trailing spaces at the end of lines. To make finding extra whitespaces easier, you can [modify VS Code](https://stackoverflow.com/questions/30140595/show-whitespace-characters-in-visual-studio-code) to show characters where whitespaces appear. eslint: [`no-trailing-spaces`](https://eslint.org/docs/rules/no-trailing-spaces)
 
   <a name="whitespace--no-multiple-empty-lines"></a>
   - [19.19](#whitespace--no-multiple-empty-lines) Avoid multiple empty lines and only allow one newline at the end of files. eslint: [`no-multiple-empty-lines`](https://eslint.org/docs/rules/no-multiple-empty-lines)
@@ -2957,12 +2951,8 @@ TODO: Adjust number to 18.1
 
 ## Type Casting & Coercion
 
-  <a name="coercion--explicit"></a><a name="21.1"></a>
-  - [22.1](#coercion--explicit) Perform type coercion at the beginning of the statement.
-  TODO: What does this mean? Otherwise delete
-
   <a name="coercion--strings"></a><a name="21.2"></a>
-  - [22.2](#coercion--strings)  Strings: eslint: [`no-new-wrappers`](https://eslint.org/docs/rules/no-new-wrappers)
+  - [22.1](#coercion--strings)  Strings: eslint: [`no-new-wrappers`](https://eslint.org/docs/rules/no-new-wrappers)
 
     ```javascript
     // => this.reviewScore = 9;
@@ -2981,7 +2971,7 @@ TODO: Adjust number to 18.1
     ```
 
   <a name="coercion--numbers"></a><a name="21.3"></a>
-  - [22.3](#coercion--numbers) Numbers: Use `Number` for type casting and `parseInt` always with a radix for parsing strings. eslint: [`no-new-wrappers`](https://eslint.org/docs/rules/no-new-wrappers)
+  - [22.2](#coercion--numbers) Numbers: Use `Number` for type casting and `parseInt` always with a radix for parsing strings. eslint: [`no-new-wrappers`](https://eslint.org/docs/rules/no-new-wrappers)
   TODO: Maybe add more info on why we don't need radix anymore (Eslint has updated info)
 
     ```javascript
@@ -3007,7 +2997,7 @@ TODO: Adjust number to 18.1
     ```
 
   <a name="coercion--comment-deviations"></a><a name="21.4"></a>
-  - [22.4](#coercion--comment-deviations) If for whatever reason you are doing something wild and `parseInt` is your bottleneck and need to use Bitshift for [performance reasons](https://jsperf.com/coercion-vs-casting/3), leave a comment explaining why and what you’re doing.
+  - [22.3](#coercion--comment-deviations) If for whatever reason you are doing something wild and `parseInt` is your bottleneck and need to use Bitshift for [performance reasons](https://jsperf.com/coercion-vs-casting/3), leave a comment explaining why and what you’re doing.
 
     ```javascript
     // good
@@ -3020,7 +3010,7 @@ TODO: Adjust number to 18.1
     ```
 
   <a name="coercion--bitwise"></a><a name="21.5"></a>
-  - [22.5](#coercion--bitwise) **Note:** Be careful when using bitshift operations. Numbers are represented as [64-bit values](https://es5.github.io/#x4.3.19), but bitshift operations always return a 32-bit integer ([source](https://es5.github.io/#x11.7)). Bitshift can lead to unexpected behavior for integer values larger than 32 bits. [Discussion](https://github.com/airbnb/javascript/issues/109). Largest signed 32-bit Int is 2,147,483,647:
+  - [22.4](#coercion--bitwise) **Note:** Be careful when using bitshift operations. Numbers are represented as [64-bit values](https://es5.github.io/#x4.3.19), but bitshift operations always return a 32-bit integer ([source](https://es5.github.io/#x11.7)). Bitshift can lead to unexpected behavior for integer values larger than 32 bits. [Discussion](https://github.com/airbnb/javascript/issues/109). Largest signed 32-bit Int is 2,147,483,647:
 
     ```javascript
     2147483647 >> 0; // => 2147483647
@@ -3029,7 +3019,7 @@ TODO: Adjust number to 18.1
     ```
 
   <a name="coercion--booleans"></a><a name="21.6"></a>
-  - [22.6](#coercion--booleans) Booleans: eslint: [`no-new-wrappers`](https://eslint.org/docs/rules/no-new-wrappers)
+  - [22.5](#coercion--booleans) Booleans: eslint: [`no-new-wrappers`](https://eslint.org/docs/rules/no-new-wrappers)
 
     ```javascript
     const age = 0;
@@ -3049,8 +3039,7 @@ TODO: Adjust number to 18.1
 ## Naming Conventions
 
   <a name="naming--descriptive"></a><a name="22.1"></a>
-  - [23.1](#naming--descriptive) Avoid single letter names. Be descriptive with your naming. eslint: [`id-length`](https://eslint.org/docs/rules/id-length)
-  TODO: Not enforced in frontend
+  - [23.1](#naming--descriptive) Avoid single letter names. Be descriptive with your naming. This preferred, but not enforced in the frontend. eslint: [`id-length`](https://eslint.org/docs/rules/id-length)
 
     ```javascript
     // bad
@@ -3065,8 +3054,7 @@ TODO: Adjust number to 18.1
     ```
 
   <a name="naming--camelCase"></a><a name="22.2"></a>
-  - [23.2](#naming--camelCase) Use camelCase when naming objects, functions, and instances. eslint: [`camelcase`](https://eslint.org/docs/rules/camelcase.html)
-  TODO: mention lint rule off due to react 16 conversion
+  - [23.2](#naming--camelCase) Use camelCase when naming objects, functions, and instances. Due to the conversion to React 16, this is "temporarily" turned off. eslint: [`camelcase`](https://eslint.org/docs/rules/camelcase.html)
 
     ```javascript
     // bad
