@@ -6,6 +6,8 @@ Other Style Guides
 
   - [React](react/)
   - [CSS-in-JavaScript](css-in-javascript/)
+  - [Jasmine](https://github.com/CareMessagePlatform/jasmine-styleguide)
+
 
 ## Table of Contents
 
@@ -22,7 +24,7 @@ Other Style Guides
   1. [Iterators and Generators](#iterators-and-generators)
   1. [Properties](#properties)
   1. [Variables](#variables)
-  1. [Learning Hoisting](#learninghoisting)
+  1. [Learning Hoisting](#learning-hoisting)
   1. [Comparison Operators & Equality](#comparison-operators--equality)
   1. [Blocks](#blocks)
   1. [Control Statements](#control-statements)
@@ -1819,17 +1821,16 @@ Other Style Guides
     ```
 
   <a name="hoisting--anon-expressions"></a><a name="14.2"></a>
-  TODO: Rename function to something other than anon
   - [14.2](#hoisting--anon-expressions) Anonymous function expressions hoist their variable name, but not the function assignment.
 
     ```javascript
     function example() {
-      console.log(anonymous); // => undefined
+      console.log(doSomething); // => undefined
 
-      anonymous(); // => TypeError anonymous is not a function
+      doSomething(); // => TypeError doSomething is not a function
 
-      var anonymous = function () {
-        console.log('anonymous function expression');
+      var doSomething = function () {
+        console.log('doSomething function expression');
       };
     }
     ```
@@ -1884,11 +1885,22 @@ Other Style Guides
 
   <a name="comparison--eqeqeq"></a><a name="15.1"></a>
   TODO: Add a 'why'
-  - [15.1](#comparison--eqeqeq) Use `===` and `!==` over `==` and `!=`. eslint: [`eqeqeq`](https://eslint.org/docs/rules/eqeqeq.html)
+  - [15.1](#comparison--eqeqeq) Use `===` and `!==` over `==` and `!=`. The reason is that `==` and `!=` do type coercion which follows a rather obscure [Abstract Equality Comparision Algorithm](https://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3). eslint: [`eqeqeq`](https://eslint.org/docs/rules/eqeqeq.html)
+  
+    ```javascript
+    // bad: All of the following statements are considered true
+    [] == false
+    [] == ![]
+    3 == "03"
+    
+    // good: Considered false as expected
+    [] === false
+    [] === ![]
+    3 === "03"
+    ```
 
   <a name="comparison--if"></a><a name="15.2"></a>
-  TODO: Learning moment
-  - [15.2](#comparison--if) Conditional statements such as the `if` statement evaluate their expression using coercion with the `ToBoolean` abstract method and always follow these simple rules:
+  - [15.2](#comparison--if) _**Let's Learn**_ Conditional statements such as the `if` statement evaluate their expression using coercion with the `ToBoolean` abstract method and always follow these simple rules:
 
     - **Objects** evaluate to **true**
     - **Undefined** evaluates to **false**
@@ -2090,7 +2102,7 @@ Other Style Guides
     ```
 
   <a name="blocks--cuddled-elses"></a><a name="16.2"></a>
-  TODO: good & bad swapped, modify description 'stroustrup braces'
+  TODO: good & bad swapped, modify description 'stroustrup braces' UPDATE: Prettier prefers original style. Confirm thoughts.
   - [16.2](#blocks--cuddled-elses) If you’re using multi-line blocks with `if` and `else`, put `else` on the same line as your `if` block’s closing brace. eslint: [`brace-style`](https://eslint.org/docs/rules/brace-style.html)
 
     ```javascript
@@ -2634,7 +2646,7 @@ TODO: Adjust number to 18.1
 
   <a name="whitespace--max-len"></a><a name="18.12"></a>
   - [19.12](#whitespace--max-len) Avoid having lines of code that are longer than 100 characters (including whitespace). Note: per [above](#strings--line-length), long strings are exempt from this rule, and should not be broken up. eslint: [`max-len`](https://eslint.org/docs/rules/max-len.html)
-  TODO: Check how many cases and maybe change to follow 100 max rule (currently 150 max)
+  TODO: Currently 150 max, UPDATE: Prettier changed to 120 max
 
     > Why? This ensures readability and maintainability.
 
