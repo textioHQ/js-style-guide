@@ -1784,7 +1784,7 @@ Other Style Guides
 ## Learning Hoisting
 
   <a name="hoisting--about"></a><a name="14.1"></a>
-  **These sections do not imply styling preference but are more of a learning guide for how hoisting works.**
+  **🎓 These sections do not imply styling preference but are more of a learning guide for how hoisting works. 🎓**
   - [14.1](#hoisting--about) `var` declarations get hoisted to the top of their closest enclosing function scope, their assignment does not. `const` and `let` declarations are blessed with a new concept called [Temporal Dead Zones (TDZ)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let#Temporal_Dead_Zone). It’s important to know why [typeof is no longer safe](http://es-discourse.com/t/why-typeof-is-no-longer-safe/15).
 
     ```javascript
@@ -1899,7 +1899,7 @@ Other Style Guides
     ```
 
   <a name="comparison--if"></a><a name="15.2"></a>
-  - [15.2](#comparison--if) _**Let's Learn**_ Conditional statements such as the `if` statement evaluate their expression using coercion with the `ToBoolean` abstract method and always follow these simple rules:
+  - [15.2](#comparison--if) _**🎓 Let's Learn 🎓**_ Conditional statements such as the `if` statement evaluate their expression using coercion with the `ToBoolean` abstract method and always follow these simple rules:
 
     - **Objects** evaluate to **true**
     - **Undefined** evaluates to **false**
@@ -2971,8 +2971,7 @@ Other Style Guides
     ```
 
   <a name="coercion--numbers"></a><a name="21.3"></a>
-  - [22.2](#coercion--numbers) Numbers: Use `Number` for type casting and `parseInt` always with a radix for parsing strings. eslint: [`no-new-wrappers`](https://eslint.org/docs/rules/no-new-wrappers)
-  TODO: Maybe add more info on why we don't need radix anymore (Eslint has updated info)
+  - [22.2](#coercion--numbers) Numbers: Use `Number` for type casting and `parseInt` always with a radix for parsing strings. eslint: [`no-new-wrappers`](https://eslint.org/docs/rules/no-new-wrappers) [Read why radix is no longer needed](https://eslint.org/docs/rules/radix)
 
     ```javascript
     const inputValue = '4';
@@ -3068,8 +3067,7 @@ Other Style Guides
     ```
 
   <a name="naming--PascalCase"></a><a name="22.3"></a>
-  - [23.3](#naming--PascalCase) Use PascalCase only when naming constructors or classes. eslint: [`new-cap`](https://eslint.org/docs/rules/new-cap.html)
-  TODO: react functional components / emotion must be pascal case
+  - [23.3](#naming--PascalCase) Use PascalCase only when using emotion, naming constructors, react functional components or classes. eslint: [`new-cap`](https://eslint.org/docs/rules/new-cap.html)
 
     ```javascript
     // bad
@@ -3094,10 +3092,9 @@ Other Style Guides
     ```
 
   <a name="naming--leading-underscore"></a><a name="22.4"></a>
-  - [23.4](#naming--leading-underscore) Do not use trailing or leading underscores. eslint: [`no-underscore-dangle`](https://eslint.org/docs/rules/no-underscore-dangle.html)
-  TODO: mention it is used in old code, and for some tools (redux devtools)
+  - [23.4](#naming--leading-underscore) Do not use trailing or leading underscores. eslint: [`no-underscore-dangle`](https://eslint.org/docs/rules/no-underscore-dangle.html) **We use this in older code & for some tools (like __REDUX_DEVTOOLS_EXTENSION__)** but avoid in your own implementations.
 
-    > Why? JavaScript does not have the concept of privacy in terms of properties or methods. Although a leading underscore is a common convention to mean “private”, in fact, these properties are fully public, and as such, are part of your public API contract. This convention might lead developers to wrongly think that a change won’t count as breaking, or that tests aren’t needed. tl;dr: if you want something to be “private”, it must not be observably present.
+    > Why? JavaScript does not have the concept of privacy in terms of properties or methods. Although a leading underscore is a common convention to mean “private”, in fact, these properties are fully public, and as such, are part of your public API contract. This convention might lead developers to wrongly think that a change won’t count as breaking, or that tests aren’t needed.
 
     ```javascript
     // bad
@@ -3107,12 +3104,6 @@ Other Style Guides
 
     // good
     this.firstName = 'Panda';
-
-    TODO: Y this?
-    // good, in environments where WeakMaps are available
-    // see https://kangax.github.io/compat-table/es6/#test-WeakMap
-    const firstNames = new WeakMap();
-    firstNames.set(this, 'Panda');
     ```
 
   <a name="naming--self-this"></a><a name="22.5"></a>
@@ -3148,36 +3139,32 @@ Other Style Guides
   TODO: Note we don't do this currently, figure out what we want to do for 23.6, 23.7 23.8
 
     ```javascript
-    // file 1 contents
-    class CheckBox {
-      // ...
-    }
+    // ex. file 1 📄
+    class CheckBox { // ... }
     export default CheckBox;
 
-    // file 2 contents
+    // ex. file 2 📄
     export default function fortyTwo() { return 42; }
 
-    // file 3 contents
+    // ex. file 3 📄
     export default function insideDirectory() {}
 
-    // in some other file
-    // bad
-    import CheckBox from './checkBox'; // PascalCase import/export, camelCase filename
-    import FortyTwo from './FortyTwo'; // PascalCase import/filename, camelCase export
-    import InsideDirectory from './InsideDirectory'; // PascalCase import/filename, camelCase export
 
     // bad
-    import CheckBox from './check_box'; // PascalCase import/export, snake_case filename
-    import forty_two from './forty_two'; // snake_case import/filename, camelCase export
-    import inside_directory from './inside_directory'; // snake_case import, camelCase export
+    import CheckBox from './checkBox';
+    import CheckBox from './check_box';
+    
+    import FortyTwo from './FortyTwo';
+    import forty_two from './forty_two';
+    
+    import InsideDirectory from './InsideDirectory'; // PascalCase import/filename, camelCase export
     import index from './inside_directory/index'; // requiring the index file explicitly
     import insideDirectory from './insideDirectory/index'; // requiring the index file explicitly
 
     // good
-    import CheckBox from './CheckBox'; // PascalCase export/import/filename
-    import fortyTwo from './fortyTwo'; // camelCase export/import/filename
-    import insideDirectory from './insideDirectory'; // camelCase export/import/directory name/implicit "index"
-    // ^ supports both insideDirectory.js and insideDirectory/index.js
+    import CheckBox from './CheckBox';
+    import fortyTwo from './fortyTwo';
+    import insideDirectory from './insideDirectory'; // supports insideDirectory.js or insideDirectory/index.js
     ```
 
   <a name="naming--camelCase-default-export"></a><a name="22.7"></a>
@@ -3204,14 +3191,11 @@ Other Style Guides
     ```
 
   <a name="naming--Acronyms-and-Initialisms"></a>
-  - [23.9](#naming--Acronyms-and-Initialisms) Acronyms and initialisms should always be all uppercased, or all lowercased.
-  TODO: If first letter is uppercase, all uppercase. Lowercase, then lowercase. 
-
-    > Why? Names are for readability, not to appease a computer algorithm.
+  - [23.9](#naming--Acronyms-and-Initialisms) If the first letter of an acronym/initialism is uppercasee then the acronym/initialism should be all uppercased, if lowercase then all lowercase.
 
     ```javascript
     // bad
-    import SmsContainer from './containers/SmsContainer';
+    const customerId = 4;
 
     // bad
     const HttpRequests = [
@@ -3219,22 +3203,14 @@ Other Style Guides
     ];
 
     // good
-    import SMSContainer from './containers/SMSContainer';
+    const customerID = 4;
 
     // good
-    const HTTPRequests = [
-      // ...
-    ];
-
-    // also good
     const httpRequests = [
       // ...
     ];
 
-    // best, don't even use an acronyms
-    import TextMessageContainer from './containers/TextMessageContainer';
-
-    // best, don't even use an acronyms
+    // best: don't even use an acronyms
     const requests = [
       // ...
     ];
@@ -3282,13 +3258,8 @@ TODO: Simplify rule for correct/current usage
 
 ## Accessors
 
-  <a name="accessors--not-required"></a><a name="23.1"></a>
-  - [24.1](#accessors--not-required) Accessor functions for properties are not required.
-TODO: Add example or combine with below if same example
-
   <a name="accessors--no-getters-setters"></a><a name="23.2"></a>
-  TODO: Clarify why getters & setters are bad & expanded on the unexpected side effects
-  - [24.2](#accessors--no-getters-setters) Do not use JavaScript getters/setters as they cause unexpected side effects and are harder to test, maintain, and reason about. Instead, if you do make accessor functions, use `getVal()` and `setVal('hello')`.
+  - [24.1](#accessors--no-getters-setters) **Do not use JavaScript getters/setters as they cause unexpected side effects** and are harder to test, maintain, and reason about. Read more about [why you should avoid getters/setters](https://dzone.com/articles/why-getters-and-setters-are-a-bad-idea-in-javascri). Instead, if you do make accessor functions, use `getVal()` and `setVal('hello')`.
 
     ```javascript
     // bad
@@ -3315,24 +3286,22 @@ TODO: Add example or combine with below if same example
     ```
 
   <a name="accessors--boolean-prefix"></a><a name="23.3"></a>
-  - [24.3](#accessors--boolean-prefix) If the property/method is a `boolean`, use `isVal()` or `hasVal()`.
-TODO: Better exmaple
+  - [24.2](#accessors--boolean-prefix) If the property/method is a `boolean`, use `isVal()` or `hasVal()`.
 
     ```javascript
     // bad
-    if (!dragon.age()) {
-      return false;
+    if (dragon.awake()) {
+      return true;
     }
 
     // good
-    if (!dragon.hasAge()) {
-      return false;
+    if (dragon.isAwake()) {
+      return true;
     }
     ```
 
   <a name="accessors--consistent"></a><a name="23.4"></a>
-  - [24.4](#accessors--consistent) It’s okay to create `get()` and `set()` functions, but be consistent.
-TODO: Change description, we don't use these but if you need to 'here's how'
+  - [24.3](#accessors--consistent) It’s okay to create `get()` and `set()` functions, but be consistent. _We do not use these, but if you need to here is how you would use them._
 
     ```javascript
     class Jedi {
@@ -3356,38 +3325,21 @@ TODO: Change description, we don't use these but if you need to 'here's how'
 ## Events
 
   <a name="events--hash"></a><a name="24.1"></a>
-  - [25.1](#events--hash) When attaching data payloads to events (whether DOM events or something more proprietary like Backbone events), pass an object literal (also known as a "hash")  instead of a raw value. This allows a subsequent contributor to add more data to the event payload without finding and updating every handler for the event. For example, instead of:
-  TODO: Update to not use jQuery examples
+  - [25.1](#events--hash) When attaching data payloads to events, pass an object literal (also known as a "hash")  instead of a raw value. This allows a subsequent contributor to add more data to the event payload without finding and updating every handler for the event. For example, instead of:
 
     ```javascript
     // bad
-    $(this).trigger('listingUpdated', listing.id);
+    onButtonClick = () => return this.state.count;
 
-    // ...
-
-    $(this).on('listingUpdated', (e, listingID) => {
-      // do something with listingID
-    });
-    ```
-
-    prefer:
-
-    ```javascript
     // good
-    $(this).trigger('listingUpdated', { listingID: listing.id });
-
-    // ...
-
-    $(this).on('listingUpdated', (e, data) => {
-      // do something with data.listingID
-    });
+    onButtonClick = () => return { count: this.state.count };
     ```
 
   **[⬆ back to top](#table-of-contents)**
 
 ## jQuery
 
-  TODO: Note on avoiding JQuery
+  **❗️Note: We are trying to avoid using jQuery in all modern code. Follow these styles when jQuery is absolutely necessary. ❗️**
   <a name="jquery--dollar-prefix"></a><a name="25.1"></a>
   - [26.1](#jquery--dollar-prefix) Prefix jQuery object variables with a `$`.
 
