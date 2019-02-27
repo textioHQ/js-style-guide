@@ -43,8 +43,7 @@ Other Style Guides
 ## Types
 
   <a name="types--primitives"></a><a name="1.1"></a>
-  - [1.1](#types--primitives) **Primitives**: When you access a primitive type you work directly on its value.
-  TODO: Try to clarify, or add diagram to explain further
+  - [1.1](#types--primitives) **Primitives**: When you access a primitive type you work directly on its value. Further explaination [available here](https://github.com/Ada-Developers-Academy/textbook-curriculum/blob/master/02-intermediate-ruby/references-and-values.md)
 
     - `string`
     - `number`
@@ -1029,28 +1028,8 @@ Other Style Guides
     });
     ```
 
-  <a name="arrows--confusing"></a><a name="8.5"></a>
-  - [8.5](#arrows--confusing) Avoid confusing arrow function syntax (`=>`) with comparison operators (`<=`, `>=`). eslint: [`no-confusing-arrow`](https://eslint.org/docs/rules/no-confusing-arrow) TODO: Prettier update conflicts with this rule, we've disabled it for webapp UPDATE
-
-    ```javascript
-    // bad
-    const itemHeight = item => item.height <= 256 ? item.largeSize : item.smallSize;
-
-    // bad
-    const itemHeight = (item) => item.height >= 256 ? item.largeSize : item.smallSize;
-
-    // good
-    const itemHeight = item => (item.height <= 256 ? item.largeSize : item.smallSize);
-
-    // good
-    const itemHeight = (item) => {
-      const { height, largeSize, smallSize } = item;
-      return height <= 256 ? largeSize : smallSize;
-    };
-    ```
-
   <a name="whitespace--implicit-arrow-linebreak"></a>
-  - [8.6](#whitespace--implicit-arrow-linebreak) Enforce the location of arrow function bodies with implicit returns. eslint: [`implicit-arrow-linebreak`](https://eslint.org/docs/rules/implicit-arrow-linebreak)
+  - [8.5](#whitespace--implicit-arrow-linebreak) Enforce the location of arrow function bodies with implicit returns. eslint: [`implicit-arrow-linebreak`](https://eslint.org/docs/rules/implicit-arrow-linebreak)
 
     ```javascript
     // bad
@@ -2449,7 +2428,6 @@ Other Style Guides
   <a name="whitespace--chains"></a><a name="18.6"></a>
   - [19.6](#whitespace--chains) Use indentation when making long method chains (more than 2 method chains). Use a leading dot, which
     emphasizes that the line is a method call, not a new statement. eslint: [`newline-per-chained-call`](https://eslint.org/docs/rules/newline-per-chained-call) [`no-whitespace-before-property`](https://eslint.org/docs/rules/no-whitespace-before-property)
-    TODO: find out if enforced, and if not bring it up to App eng to change rule
 
     ```javascript
     // bad
@@ -2640,8 +2618,7 @@ Other Style Guides
     ```
 
   <a name="whitespace--max-len"></a><a name="18.12"></a>
-  - [19.12](#whitespace--max-len) Avoid having lines of code that are longer than 100 characters (including whitespace). Note: per [above](#strings--line-length), long strings are exempt from this rule, and should not be broken up. eslint: [`max-len`](https://eslint.org/docs/rules/max-len.html)
-  TODO: Currently 150 max, UPDATE: Prettier changed to 120 max
+  - [19.12](#whitespace--max-len) Avoid having lines of code that are longer than 120 characters (including whitespace). Note: per [above](#strings--line-length), long strings are exempt from this rule, and should not be broken up. eslint: [`max-len`](https://eslint.org/docs/rules/max-len.html)
 
     > Why? This ensures readability and maintainability.
 
