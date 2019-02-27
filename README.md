@@ -39,7 +39,6 @@ Other Style Guides
   1. [Accessors](#accessors)
   1. [Events](#events)
   1. [jQuery](#jquery)
-  1. [ECMAScript 6+ (ES 2015+) Styles](#ecmascript-6-es-2015-styles)
   1. [Standard Library](#standard-library)
 
 ## Types
@@ -268,13 +267,12 @@ Other Style Guides
     ```
 
   <a name="objects--prototype-builtins"></a>
-  - [3.7](#objects--prototype-builtins) Do not call `Object.prototype` methods directly, such as `hasOwnProperty`, `propertyIsEnumerable`, and `isPrototypeOf`. eslint: [`no-prototype-builtins`](https://eslint.org/docs/rules/no-prototype-builtins)
-  TODO: Check usage in code. UPDATE: We currently use the bad style
+  - [3.7](#objects--prototype-builtins) It's okay to `Object.prototype` methods directly, such as `hasOwnProperty`, `propertyIsEnumerable`, and `isPrototypeOf`. eslint: [`no-prototype-builtins`](https://eslint.org/docs/rules/no-prototype-builtins)
 
     > Why? These methods may be shadowed by properties on the object in question - consider `{ hasOwnProperty: false }` - or, the object may be a null object (`Object.create(null)`).
 
     ```javascript
-    // bad
+    // okay
     console.log(object.hasOwnProperty(key));
 
     // good
@@ -550,7 +548,7 @@ Other Style Guides
 
   <a name="strings--quotes"></a><a name="6.1"></a>
   - [6.1](#strings--quotes) Use single quotes `''` for strings. eslint: [`quotes`](https://eslint.org/docs/rules/quotes.html)
-  TODO: Have a discussion with App Eng. Modify if not changing to this.
+  TODO: Have a discussion with App Eng. Modify if not changing to this. Prettier also ignores, but we can enforce with eslint rule.
 
     ```javascript
     // bad
@@ -638,17 +636,17 @@ Other Style Guides
     > Why? Function declarations are hoisted, which means that it’s easy - too easy - to reference the function before it is defined in the file. This harms readability and maintainability. If you find that a function’s definition is large or complex enough that it is interfering with understanding the rest of the file, then perhaps it’s time to extract it to its own module! Don’t forget to explicitly name the expression, regardless of whether or not the name is inferred from the containing variable (which is often the case in modern browsers or when using compilers such as Babel). This eliminates any assumptions made about the Error’s call stack. ([Discussion](https://github.com/airbnb/javascript/issues/794))
 
     ```javascript
-    // bad
+    // fine
     function foo() {
       // ...
     }
 
-    // okay
+    // good
     const foo = () => {
       // ...
     };
 
-    // good TODO: Revisit, do we want to do this & add 'avoid using IIFEs'
+    // good
     // lexical name distinguished from the variable-referenced invocation(s)
     const short = function longUniqueMoreDescriptiveLexicalFoo() {
       // ...
@@ -2081,7 +2079,6 @@ Other Style Guides
     ```
 
   <a name="blocks--cuddled-elses"></a><a name="16.2"></a>
-  TODO: good & bad swapped, modify description 'stroustrup braces' UPDATE: Prettier prefers original style. Confirm thoughts.
   - [16.2](#blocks--cuddled-elses) If you’re using multi-line blocks with `if` and `else`, put `else` on the same line as your `if` block’s closing brace. eslint: [`brace-style`](https://eslint.org/docs/rules/brace-style.html)
 
     ```javascript
@@ -2089,7 +2086,8 @@ Other Style Guides
     if (test) {
       thing1();
       thing2();
-    } else {
+    }
+    else {
       thing3();
     }
     
@@ -2097,8 +2095,7 @@ Other Style Guides
     if (test) {
       thing1();
       thing2();
-    }
-    else {
+    } else {
       thing3();
     }
     ```
@@ -3114,8 +3111,7 @@ Other Style Guides
     ```
 
   <a name="naming--filename-matches-export"></a><a name="22.6"></a>
-  - [23.6](#naming--filename-matches-export) A base filename should exactly match the name of its default export.
-  TODO: Note we don't do this currently, figure out what we want to do for 23.6, 23.7 23.8
+  - [23.6](#naming--filename-matches-export) If you have a default or there is a clear primary export, a base filename should exactly match the name. Name your files well.
 
     ```javascript
     // ex. file 1 📄
@@ -3383,35 +3379,6 @@ TODO: Simplify rule for correct/current usage
     // good
     $sidebar.find('ul').hide();
     ```
-
-**[⬆ back to top](#table-of-contents)**
-
-<a name="ecmascript-6-styles"></a>
-## ECMAScript 6+ (ES 2015+) Styles
-
-  <a name="es6-styles"></a><a name="27.1"></a>
-  - [28.1](#es6-styles) This is a collection of links to the various ES6+ features.
-
-1. [Arrow Functions](#arrow-functions)
-1. [Classes](#classes--constructors)
-1. [Object Shorthand](#es6-object-shorthand)
-1. [Object Concise](#es6-object-concise)
-1. [Object Computed Properties](#es6-computed-properties)
-1. [Template Strings](#es6-template-literals)
-1. [Destructuring](#destructuring)
-1. [Default Parameters](#es6-default-parameters)
-1. [Rest](#es6-rest)
-1. [Array Spreads](#es6-array-spreads)
-1. [Let and Const](#references)
-1. [Exponentiation Operator](#es2016-properties--exponentiation-operator)
-1. [Iterators and Generators](#iterators-and-generators)
-1. [Modules](#modules)
-
-  <a name="tc39-proposals"></a>
-  TODO: Talk about unstandardized JS features
-  - [28.2](#tc39-proposals) Do not use [TC39 proposals](https://github.com/tc39/proposals) that have not reached stage 3.
-
-    > Why? [They are not finalized](https://tc39.github.io/process-document/), and they are subject to change or to be withdrawn entirely. We want to use JavaScript, and proposals are not JavaScript yet.
 
 **[⬆ back to top](#table-of-contents)**
 
