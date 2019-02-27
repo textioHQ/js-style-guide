@@ -1,6 +1,8 @@
-# Textio Web Apps JavaScript Style Guide
+# ✨ Textio Web Apps JavaScript Style Guide ✨
 
-*A mostly reasonable approach to JavaScript, Based on AirBnb Style guide*
+*⚡️🌈 A mostly reasonable approach to JavaScript, Based on AirBnb Style guide 🌈⚡️*
+
+This style guide is a reference when working in web-apps owned spaces. It is not a strict set of rules, but a guide to improve code consistency & readability. Included are `eslint` rules with examples, general style preferences, naming conventions, and 🎓learning moments.
 
 Other Style Guides
 
@@ -278,7 +280,7 @@ Other Style Guides
     // good
     console.log(Object.prototype.hasOwnProperty.call(object, key));
 
-    // best
+    // best 🌝
     const has = Object.prototype.hasOwnProperty; // cache the lookup once, in module scope.
     /* or */
     import has from 'has'; // https://www.npmjs.com/package/has
@@ -290,7 +292,7 @@ Other Style Guides
   - [3.8](#objects--rest-spread) Prefer the object spread operator over [`Object.assign`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) to shallow-copy objects. Use the object rest operator to get a new object with certain properties omitted.
 
     ```javascript
-    // very bad
+    // very bad 😬
     const original = { a: 1, b: 2 };
     const copy = Object.assign(original, { c: 3 }); // this mutates `original` ಠ_ಠ
     delete copy.a; // so does this
@@ -361,7 +363,7 @@ Other Style Guides
     // not as good
     const nodes = Array.from(foo);
 
-    // best
+    // best 🌝
     const nodes = [...foo];
     ```
 
@@ -497,7 +499,7 @@ Other Style Guides
       return `${firstName} ${lastName}`;
     }
 
-    // best
+    // best 🌝
     function getFullName({ firstName, lastName }) {
       return `${firstName} ${lastName}`;
     }
@@ -743,7 +745,7 @@ Other Style Guides
   - [7.7](#es6-default-parameters) Use default parameter syntax rather than mutating function arguments.
 
     ```javascript
-    // really bad, NO!
+    // really bad, NO! 😬
     function handleThings(opts) {
       // No! We shouldn’t mutate function arguments.
       // Double bad: if opts is falsy it'll be set to an object which may
@@ -1235,7 +1237,7 @@ Other Style Guides
     import AirbnbStyleGuide from './AirbnbStyleGuide';
     export default AirbnbStyleGuide.es6;
 
-    // best
+    // best 🌝
     import { es6 } from './AirbnbStyleGuide';
     export default es6;
     ```
@@ -1400,7 +1402,7 @@ Other Style Guides
     });
     sum === 15;
 
-    // best: Use the functional force
+    // best: Use the functional force 🌝
     const sum = numbers.reduce((total, num) => total + num, 0);
     sum === 15;
 
@@ -1416,7 +1418,7 @@ Other Style Guides
       increasedByOne.push(num + 1);
     });
 
-    // best: Keeping it functional, not mutating
+    // best: Keeping it functional, not mutating 🌝
     const increasedByOne = numbers.map(num => num + 1);
     ```
 
@@ -1997,7 +1999,7 @@ Other Style Guides
       ? 'bar'
       : maybeNull;
 
-    // best
+    // best 🌝
     const foo = maybe1 > maybe2 ? 'bar' : maybeNull;
     ```
 
@@ -2114,7 +2116,7 @@ Other Style Guides
       }
     }
 
-    // bad
+    // bad 🐈
     function cats() {
       if (x) {
         return x;
@@ -2123,7 +2125,7 @@ Other Style Guides
       }
     }
 
-    // bad
+    // bad 🐕
     function dogs() {
       if (x) {
         return x;
@@ -2143,7 +2145,7 @@ Other Style Guides
       return y;
     }
 
-    // good
+    // good 🐈
     function cats() {
       if (x) {
         return x;
@@ -2155,7 +2157,7 @@ Other Style Guides
       return z; // must have a return
     }
 
-    // good
+    // good 🐕
     function dogs(x) {
       if (x) {
         if (z) {
@@ -2321,7 +2323,7 @@ Other Style Guides
   - [19.1](#whitespace--spaces) Use soft tabs (space character) set to 2 or 4 spaces. eslint: [`indent`](https://eslint.org/docs/rules/indent.html). Depending on the codebase you are working in, it may be set to 2 or 4, go with what is existing.
 
     ```javascript
-    // very bad
+    // very bad 😬
     function bar() {
     ∙let name;
     }
@@ -2351,13 +2353,13 @@ Other Style Guides
       console.log('test');
     }
 
-    // bad
+    // bad 🐕
     dog.set('attr',{
       age: '1 year',
       breed: 'Bernese Mountain Dog',
     });
 
-    // good
+    // good 🐕
     dog.set('attr', {
       age: '1 year',
       breed: 'Bernese Mountain Dog',
@@ -3006,7 +3008,7 @@ Other Style Guides
     // good
     const hasAge = Boolean(age);
 
-    // best
+    // best 🌝
     const hasAge = !!age;
     ```
 
@@ -3187,7 +3189,7 @@ Other Style Guides
       // ...
     ];
 
-    // best: don't even use an acronyms
+    // best: don't even use an acronyms 🌝
     const requests = [
       // ...
     ];
@@ -3453,3 +3455,4 @@ TODO: Simplify rule for correct/current usage
 
 **[⬆ back to top](#table-of-contents)**
 
+🏁🏁🏁
