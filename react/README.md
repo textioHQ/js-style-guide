@@ -24,15 +24,13 @@ This style guide is mostly based on the standards that are currently prevalent i
 
 ## Basic Rules
 
-  - Only include one React component per file.
-    - However, multiple [Stateless, or Pure, Components](https://facebook.github.io/react/docs/reusable-components.html#stateless-functions) are allowed per file. eslint: [`react/no-multi-comp`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-multi-comp.md#ignorestateless).
   - Always use JSX syntax.
   - Do not use `React.createElement` unless you’re initializing the app from a file that is not JSX.
-  - [`react/forbid-prod-types`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/forbid-prop-types.md) will allow `arrays` and `objects` only if it is explicitly noted what `array` and `object` contains, using `arrayOf`, `objectOf`, or `shape`.
+  - [`react/forbid-prop-types`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/forbid-prop-types.md) will allow `arrays` and `objects` only if it is explicitly noted what `array` and `object` contains, using `arrayOf`, `objectOf`, or `shape`. TODO: add this
 
-## Class vs `React.createClass` vs stateless
+## Class vs stateless
 
-  - If you have internal state and/or refs, prefer `class extends React.Component` over `React.createClass`. eslint: [`react/prefer-es6-class`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-es6-class.md) [`react/prefer-stateless-function`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-stateless-function.md)
+  - If you have internal state and/or refs, prefer `class extends React.Component` over `React.createClass`. eslint: [`react/prefer-es6-class`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-es6-class.md) [`react/prefer-stateless-function`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-stateless-function.md) TODO: When to use component vs functinal vs pure (no more createClass)
 
     ```jsx
     // bad
@@ -53,6 +51,7 @@ This style guide is mostly based on the standards that are currently prevalent i
     ```
 
     And if you don’t have state or refs, prefer normal functions (not arrow functions) over classes:
+    TODO: pull this into own section
 
     ```jsx
     // bad
@@ -62,7 +61,7 @@ This style guide is mostly based on the standards that are currently prevalent i
       }
     }
 
-    // bad (relying on function name inference is discouraged)
+    // good
     const Listing = ({ hello }) => (
       <div>{hello}</div>
     );
@@ -81,9 +80,8 @@ This style guide is mostly based on the standards that are currently prevalent i
 
 ## Naming
 
-  - **Extensions**: Use `.jsx` extension for React components. eslint: [`react/jsx-filename-extension`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md)
-  - **Filename**: Use PascalCase for filenames. E.g., `ReservationCard.jsx`.
-  - **Reference Naming**: Use PascalCase for React components and camelCase for their instances. eslint: [`react/jsx-pascal-case`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-pascal-case.md)
+  - **Filename**: Use PascalCase for filenames. E.g., `ReservationCard.js`.
+  - **Reference Naming**: TODO: If we do this. Use PascalCase for React components and camelCase for their instances. eslint: [`react/jsx-pascal-case`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-pascal-case.md)
 
     ```jsx
     // bad
@@ -99,7 +97,7 @@ This style guide is mostly based on the standards that are currently prevalent i
     const reservationItem = <ReservationCard />;
     ```
 
-  - **Component Naming**: Use the filename as the component name. For example, `ReservationCard.jsx` should have a reference name of `ReservationCard`. However, for root components of a directory, use `index.jsx` as the filename and use the directory name as the component name:
+  - **Component Naming**: Use the filename as the component name. For example, `ReservationCard.js` should have a reference name of `ReservationCard`. However, for root components of a directory, use `index.js` as the filename and use the directory name as the component name:
 
     ```jsx
     // bad
@@ -111,32 +109,6 @@ This style guide is mostly based on the standards that are currently prevalent i
     // good
     import Footer from './Footer';
     ```
-  - **Higher-order Component Naming**: Use a composite of the higher-order component’s name and the passed-in component’s name as the `displayName` on the generated component. For example, the higher-order component `withFoo()`, when passed a component `Bar` should produce a component with a `displayName` of `withFoo(Bar)`.
-
-    > Why? A component’s `displayName` may be used by developer tools or in error messages, and having a value that clearly expresses this relationship helps people understand what is happening.
-
-    ```jsx
-    // bad
-    export default function withFoo(WrappedComponent) {
-      return function WithFoo(props) {
-        return <WrappedComponent {...props} foo />;
-      }
-    }
-
-    // good
-    export default function withFoo(WrappedComponent) {
-      function WithFoo(props) {
-        return <WrappedComponent {...props} foo />;
-      }
-
-      const wrappedComponentName = WrappedComponent.displayName
-        || WrappedComponent.name
-        || 'Component';
-
-      WithFoo.displayName = `withFoo(${wrappedComponentName})`;
-      return WithFoo;
-    }
-    ```
 
   - **Props Naming**: Avoid using DOM component prop names for different purposes.
 
@@ -146,27 +118,8 @@ This style guide is mostly based on the standards that are currently prevalent i
     // bad
     <MyComponent style="fancy" />
 
-    // bad
-    <MyComponent className="fancy" />
-
     // good
     <MyComponent variant="fancy" />
-    ```
-
-## Declaration
-
-  - Do not use `displayName` for naming components. Instead, name the component by reference.
-
-    ```jsx
-    // bad
-    export default React.createClass({
-      displayName: 'ReservationCard',
-      // stuff goes here
-    });
-
-    // good
-    export default class ReservationCard extends React.Component {
-    }
     ```
 
 ## Alignment
@@ -208,7 +161,9 @@ This style guide is mostly based on the standards that are currently prevalent i
 
     // good
     {showButton && (
-      <Button />
+      <Button>
+        <span>Hi</span>
+      </Button>
     )}
 
     // good
@@ -218,21 +173,22 @@ This style guide is mostly based on the standards that are currently prevalent i
 ## Quotes
 
   - Always use double quotes (`"`) for JSX attributes, but single quotes (`'`) for all other JS. eslint: [`jsx-quotes`](https://eslint.org/docs/rules/jsx-quotes)
+  TODO: We do the opposite, no reason but this is what we use
 
     > Why? Regular HTML attributes also typically use double quotes instead of single, so JSX attributes mirror this convention.
 
     ```jsx
     // bad
+    <Foo bar="bar" />
+    
+    // good
     <Foo bar='bar' />
 
-    // good
-    <Foo bar="bar" />
-
     // bad
-    <Foo style={{ left: "20px" }} />
-
-    // good
     <Foo style={{ left: '20px' }} />
+    
+    // good
+    <Foo style={{ left: "20px" }} />
     ```
 
 ## Spacing
@@ -254,7 +210,7 @@ This style guide is mostly based on the standards that are currently prevalent i
     <Foo />
     ```
 
-  - Do not pad JSX curly braces with spaces. eslint: [`react/jsx-curly-spacing`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-curly-spacing.md)
+  - Do not pad JSX curly braces with spaces. eslint: [`react/jsx-curly-spacing`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-curly-spacing.md) TODO: prettier fixes, but we don't enforce
 
     ```jsx
     // bad
@@ -272,13 +228,13 @@ This style guide is mostly based on the standards that are currently prevalent i
     // bad
     <Foo
       UserName="hello"
-      phone_number={12345678}
+      phone_number={1234567890}
     />
 
     // good
     <Foo
       userName="hello"
-      phoneNumber={12345678}
+      phoneNumber={1234567890}
     />
     ```
 
@@ -340,7 +296,7 @@ This style guide is mostly based on the standards that are currently prevalent i
     <div role="button" />
     ```
 
-  - Do not use `accessKey` on elements. eslint: [`jsx-a11y/no-access-key`](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-access-key.md)
+  - Do not use `accessKey` on elements. (eslint rule not enforced) eslint: [`jsx-a11y/no-access-key`](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-access-key.md)
 
   > Why? Inconsistencies between keyboard shortcuts and keyboard commands used by people using screenreaders and keyboards complicate accessibility.
 
@@ -355,6 +311,7 @@ This style guide is mostly based on the standards that are currently prevalent i
   - Avoid using an array index as `key` prop, prefer a stable ID. eslint: [`react/no-array-index-key`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md)
 
 > Why? Not using a stable ID [is an anti-pattern](https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318) because it can negatively impact performance and cause issues with component state.
+TODO: Determine better patterns
 
 We don’t recommend using indexes for keys if the order of items may change.
 
@@ -406,29 +363,10 @@ We don’t recommend using indexes for keys if the order of items may change.
   };
   ```
 
-  - Use spread props sparingly.
-  > Why? Otherwise you’re more likely to pass unnecessary props down to components. And for React v15.6.1 and older, you could [pass invalid HTML attributes to the DOM](https://reactjs.org/blog/2017/09/08/dom-attributes-in-react-16.html).
+  - Don't pass unnecessary props down to components.
+  > Why? You may pass props the component doesn't care about that may cause it to re-render.
 
-  Exceptions:
-
-  - HOCs that proxy down props and hoist propTypes
-
-  ```jsx
-  function HOC(WrappedComponent) {
-    return class Proxy extends React.Component {
-      Proxy.propTypes = {
-        text: PropTypes.string,
-        isLoading: PropTypes.bool
-      };
-
-      render() {
-        return <WrappedComponent {...this.props} />
-      }
-    }
-  }
-  ```
-
-  - Spreading objects with known, explicit props. This can be particularly useful when testing React components with Mocha’s beforeEach construct.
+  - You may spread objects with known, explicit props. This can be particularly useful when testing React components with Mocha’s beforeEach construct.
 
   ```jsx
   export default function Foo {
@@ -441,26 +379,9 @@ We don’t recommend using indexes for keys if the order of items may change.
   }
   ```
 
-  Notes for use:
-  Filter out unnecessary props when possible. Also, use [prop-types-exact](https://www.npmjs.com/package/prop-types-exact) to help prevent bugs.
-
-  ```jsx
-  // bad
-  render() {
-    const { irrelevantProp, ...relevantProps  } = this.props;
-    return <WrappedComponent {...this.props} />
-  }
-
-  // good
-  render() {
-    const { irrelevantProp, ...relevantProps  } = this.props;
-    return <WrappedComponent {...relevantProps} />
-  }
-  ```
-
 ## Refs
 
-  - Always use ref callbacks. eslint: [`react/no-string-refs`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-string-refs.md)
+  - If you must use ref callbacks. eslint: [`react/no-string-refs`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-string-refs.md) TODO: confirm current React ref preferences, wrap it in a ref wrapper
 
     ```jsx
     // bad
@@ -531,24 +452,8 @@ We don’t recommend using indexes for keys if the order of items may change.
 
 ## Methods
 
-  - Use arrow functions to close over local variables.
-
-    ```jsx
-    function ItemList(props) {
-      return (
-        <ul>
-          {props.items.map((item, index) => (
-            <Item
-              key={item.key}
-              onClick={() => doSomethingWith(item.name, index)}
-            />
-          ))}
-        </ul>
-      );
-    }
-    ```
-
   - Bind event handlers for the render method in the constructor. eslint: [`react/jsx-no-bind`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-bind.md)
+  TODO: Good Arrow function example
 
     > Why? A bind call in the render path creates a brand new function on every single render.
 
@@ -564,7 +469,7 @@ We don’t recommend using indexes for keys if the order of items may change.
       }
     }
 
-    // good
+    // bad
     class extends React.Component {
       constructor(props) {
         super(props);
@@ -582,29 +487,6 @@ We don’t recommend using indexes for keys if the order of items may change.
     }
     ```
 
-  - Do not use underscore prefix for internal methods of a React component.
-    > Why? Underscore prefixes are sometimes used as a convention in other languages to denote privacy. But, unlike those languages, there is no native support for privacy in JavaScript, everything is public. Regardless of your intentions, adding underscore prefixes to your properties does not actually make them private, and any property (underscore-prefixed or not) should be treated as being public. See issues [#1024](https://github.com/airbnb/javascript/issues/1024), and [#490](https://github.com/airbnb/javascript/issues/490) for a more in-depth discussion.
-
-    ```jsx
-    // bad
-    React.createClass({
-      _onClickSubmit() {
-        // do stuff
-      },
-
-      // other stuff
-    });
-
-    // good
-    class extends React.Component {
-      onClickSubmit() {
-        // do stuff
-      }
-
-      // other stuff
-    }
-    ```
-
   - Be sure to return a value in your `render` methods. eslint: [`react/require-render-return`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/require-render-return.md)
 
     ```jsx
@@ -613,7 +495,7 @@ We don’t recommend using indexes for keys if the order of items may change.
       (<div />);
     }
 
-    // good
+    // good (TODO: make better, not empty div)
     render() {
       return (<div />);
     }
@@ -621,6 +503,7 @@ We don’t recommend using indexes for keys if the order of items may change.
 
 ## Ordering
 
+  - Simplify: Render bottom, constructor top, lifecycle middle etc, etc.
   - Ordering for `class extends React.Component`:
 
   1. optional `static` methods
@@ -669,54 +552,5 @@ We don’t recommend using indexes for keys if the order of items may change.
 
     export default Link;
     ```
-
-  - Ordering for `React.createClass`: eslint: [`react/sort-comp`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-comp.md)
-
-  1. `displayName`
-  1. `propTypes`
-  1. `contextTypes`
-  1. `childContextTypes`
-  1. `mixins`
-  1. `statics`
-  1. `defaultProps`
-  1. `getDefaultProps`
-  1. `getInitialState`
-  1. `getChildContext`
-  1. `componentWillMount`
-  1. `componentDidMount`
-  1. `componentWillReceiveProps`
-  1. `shouldComponentUpdate`
-  1. `componentWillUpdate`
-  1. `componentDidUpdate`
-  1. `componentWillUnmount`
-  1. *clickHandlers or eventHandlers* like `onClickSubmit()` or `onChangeDescription()`
-  1. *getter methods for `render`* like `getSelectReason()` or `getFooterContent()`
-  1. *optional render methods* like `renderNavigation()` or `renderProfilePicture()`
-  1. `render`
-
-## `isMounted`
-
-  - Do not use `isMounted`. eslint: [`react/no-is-mounted`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-is-mounted.md)
-
-  > Why? [`isMounted` is an anti-pattern][anti-pattern], is not available when using ES6 classes, and is on its way to being officially deprecated.
-
-  [anti-pattern]: https://facebook.github.io/react/blog/2015/12/16/ismounted-antipattern.html
-
-## Translation
-
-  This JSX/React style guide is also available in other languages:
-
-  - ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinese (Simplified)**: [JasonBoy/javascript](https://github.com/JasonBoy/javascript/tree/master/react)
-  - ![tw](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Taiwan.png) **Chinese (Traditional)**: [jigsawye/javascript](https://github.com/jigsawye/javascript/tree/master/react)
-  - ![es](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Spain.png) **Español**: [agrcrobles/javascript](https://github.com/agrcrobles/javascript/tree/master/react)
-  - ![jp](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Japan.png) **Japanese**: [mitsuruog/javascript-style-guide](https://github.com/mitsuruog/javascript-style-guide/tree/master/react)
-  - ![kr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/South-Korea.png) **Korean**: [apple77y/javascript](https://github.com/apple77y/javascript/tree/master/react)
-  - ![pl](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Poland.png) **Polish**: [pietraszekl/javascript](https://github.com/pietraszekl/javascript/tree/master/react)
-  - ![Br](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Brazil.png) **Portuguese**: [ronal2do/javascript](https://github.com/ronal2do/airbnb-react-styleguide)
-  - ![ru](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Russia.png) **Russian**: [leonidlebedev/javascript-airbnb](https://github.com/leonidlebedev/javascript-airbnb/tree/master/react)
-  - ![th](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Thailand.png) **Thai**: [lvarayut/javascript-style-guide](https://github.com/lvarayut/javascript-style-guide/tree/master/react)
-  - ![tr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Turkey.png) **Turkish**: [alioguzhan/react-style-guide](https://github.com/alioguzhan/react-style-guide)
-  - ![ua](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Ukraine.png) **Ukrainian**: [ivanzusko/javascript](https://github.com/ivanzusko/javascript/tree/master/react)
-  - ![vn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Vietnam.png) **Vietnam**: [uetcodecamp/jsx-style-guide](https://github.com/UETCodeCamp/jsx-style-guide)
 
 **[⬆ back to top](#table-of-contents)**
