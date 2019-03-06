@@ -923,6 +923,21 @@ Other Style Guides
     // good: If the arguments fit on a single line no need for new lines
     console.log(foo, bar, baz);
     ```
+    
+   <a name="functions--unused-parameters"></a>
+  - [7.16](#functions--unused-parameters) If a parameter is required but isn't used, still give a clear name as to what that parameter is. 
+
+    ```javascript
+    // bad
+    function person(name, _) {
+      console.log(name);
+    }
+
+    // good
+    function person(name, greeting) {
+      console.log(name);
+    }
+    ```
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -3228,6 +3243,83 @@ TODO: Simplify rule for correct/current usage
       key: 'value'
     };
     ```
+    
+  <a name="naming--boolean-convention"></a>
+  - [23.11](#naming--boolean-convention) Use **is**, **has**, **should** to imply boolean return values.
+
+    ```javascript
+    // bad
+    function documentEnglish(doc) {
+      if (doc.prediction === `not_english`) {
+        return false;
+      }
+      return true;
+    }
+
+    // good
+    function isDocumentEnglish(doc) {
+      if (doc.prediction === `not_english`) {
+        return false;
+      }
+      return true;
+    }
+    ```
+   
+  <a name="naming--event-streaming"></a>
+  - [23.12](#naming--event-stream) Follow naming conventions for events as outlined in the [Product Analytics Confluence page](https://textio.atlassian.net/wiki/spaces/EN/pages/478347302/Product+Analytics#ProductAnalytics-NamingConventions).
+  
+   <a name="naming--date-variables"></a>
+ - [23.12](#naming--date-variables) Name date variables with clear units to indicate the value.
+
+    ```javascript
+    // bad
+    const userJoinedDate = Profile.get(`joined`);
+
+    // good
+    const userJoinedDateInSeconds = Profile.get(`joined`);
+    ```
+    
+   <a name="naming--semantic-naming"></a>
+  - [23.13](#naming--semantic-naming) Try be semantic when naming, this may not be applicable to all naming but lean toward semantics when possible. 😀
+
+    ```javascript
+    // bad
+    const up = this.renderBtn(this.props.onUpClick, `↑`);
+
+    // good
+    const previousSearchResult = this.renderBtn(this.props.onUpClick, `↑`);
+    ```
+    
+   <a name="naming--parameter-naming"></a>
+  - [23.14](#naming--parameter-naming) Avoid single letter names; instead, spell them out.
+
+    ```javascript
+    // bad
+    friends.forEach(f => {
+      console.log(f);
+    }
+    
+    const renderBtn = () => <Button />;
+
+    // good
+    friends.forEach(friend => {
+      console.log(friend);
+    }
+    
+    const renderButton = () => <Button />;
+    ```
+    
+    <a name="naming--function-naming"></a>
+  - [23.15](#naming--function-naming) Use a verb to imply a function and not a constant.
+
+    ```javascript
+    // bad
+    defaultCatToy = () => 'Lazer';
+
+    // good
+    getDefaultCatToy = () => 'Lazer';
+    ```
+
 
 **[⬆ back to top](#table-of-contents)**
 
