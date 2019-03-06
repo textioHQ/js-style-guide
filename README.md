@@ -925,7 +925,7 @@ Other Style Guides
     ```
     
    <a name="functions--unused-parameters"></a>
-  - [7.16](#functions--unused-parameters) If a parameter is required but isn't used, still give a clear name as to what that parameter is. 
+  - [7.16](#functions--unused-parameters) If a parameter is required but isn't used, give a clear name as to what that parameter is. 
 
     ```javascript
     // bad
@@ -1495,6 +1495,30 @@ Other Style Guides
       // ...
     };
     ```
+   
+   <a name="sagas--naming"></a>
+  - [11.3](#sagas--naming) In sagas, separate the action listener & function that executes upon the action. Start the function names with **watch** & **handle** accordingly.
+
+    ```javascript
+    // bad
+    function* resolveError() {
+      yield take([resolveError.getType()]);
+      yield put(clearError());
+      yield call(handleMultiEditorChanges);
+    }
+    
+    // good
+    // executing function
+    function* handleResolveError() {
+      yield put(clearError());
+      yield call(handleMultiEditorChanges);
+    }
+    
+    // action listener
+    function* watchResolveError() {
+      yield takeEvery([resolveError.getType()], handleResolveError);
+    }
+    ```
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1771,6 +1795,19 @@ Other Style Guides
     // This is a form of extracting an object that omits the specified keys.
     var { type, ...coords } = data;
     // 'coords' is now the 'data' object without its 'type' property.
+    ```
+    
+ <a name="variables--creation"></a>
+  - [13.9](#variables--creation) Declare variables if being used multiple times so only one value needs to be updated. On a case by case basis, single use variables should be created if the name can better clarify the value. 
+
+    ```javascript
+    // bad
+    fadeInDelay(2);
+
+    // good
+    const delayInSeconds = 2;
+    
+    fadeInDelay(delayInSeconds);
     ```
 
 **[⬆ back to top](#table-of-contents)**
@@ -3291,7 +3328,7 @@ TODO: Simplify rule for correct/current usage
     ```
     
    <a name="naming--parameter-naming"></a>
-  - [23.14](#naming--parameter-naming) Avoid single letter names; instead, spell them out.
+  - [23.14](#naming--parameter-naming) Avoid single letter or shortened names; instead, spell them out.
 
     ```javascript
     // bad
